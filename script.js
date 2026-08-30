@@ -88,7 +88,7 @@ if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
 }
 
-/* ============ Sayyora Kartalari Carousel ============ */
+/* ============ Sayyora Kartalari Carousel - Scroll qotib qolish ============ */
 (function initPlanetCardsCarousel() {
     var container = kaOne('#planetCardsContainer');
     if (!container) return;
@@ -99,6 +99,8 @@ if (yearEl) {
     var currentIndex = 0;
     var totalCards = cards.length;
     var hasPassedFour = false;
+    var sectionLocked = false;
+    var scrollTimeout = null;
     
     function updateCardPositions() {
         cards.forEach(function(card, index) {
@@ -124,44 +126,49 @@ if (yearEl) {
             } else {
                 card.classList.add('hidden-below');
             }
-            
-            // 4 tadan keyin 2 qatorga o'tish
-            if (hasPassedFour && currentIndex >= 4) {
-                container.classList.add('two-rows');
-            } else {
-                container.classList.remove('two-rows');
-            }
         });
+        
+        // 4 tadan keyin 2 qatorga o'tish
+        if (hasPassedFour && currentIndex >= 4) {
+            container.classList.add('two-rows');
+        } else {
+            container.classList.remove('two-rows');
+        }
     }
     
-    // Scroll bilan carousel boshqaruvi
-    var lastScrollTop = 0;
-    var scrollTimeout;
-    
-    window.addEventListener('scroll', function() {
+    // Section scroll position aniqlash
+    function isSectionInView() {
         var rect = container.getBoundingClientRect();
-        var sectionTop = rect.top;
-        var sectionHeight = rect.height;
-        
-        // Section ekranning o'rtasida bo'lsa
-        if (sectionTop < 200 && sectionTop > -sectionHeight + 200) {
-            var scrollTop = window.scrollY || window.pageYOffset;
-            var delta = scrollTop - lastScrollTop;
-            
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(function() {
-                if (Math.abs(delta) > 50) {
-                    if (delta > 0 && currentIndex < totalCards - 1) {
-                        currentIndex++;
-                        if (currentIndex === 4) hasPassedFour = true;
-                    } else if (delta < 0 && currentIndex > 0) {
-                        currentIndex--;
-                    }
-                    updateCardPositions();
-                }
-                lastScrollTop = scrollTop;
-            }, 100);
+        return rect.top < 150 && rect.bottom > window.innerHeight - 150;
+    }
+    
+    // Scroll bilan carousel boshqaruvi - LOCK effekti
+    window.addEventListener('scroll', function() {
+        if (!isSectionInView()) {
+            sectionLocked = false;
+            return;
         }
+        
+        if (sectionLocked) return; // Lock holatida scroll ishlatilmaydi
+        
+        sectionLocked = true;
+        
+        setTimeout(function() {
+            if (currentIndex < totalCards - 1) {
+                currentIndex++;
+                if (currentIndex === 4) hasPassedFour = true;
+                updateCardPositions();
+                
+                // 2 qatorga o'tgandan keyin section'dan chiqish
+                if (currentIndex >= totalCards - 1) {
+                    setTimeout(function() {
+                        sectionLocked = false;
+                    }, 800);
+                }
+            } else {
+                sectionLocked = false;
+            }
+        }, 150);
     }, { passive: true });
     
     // Click bilan ham boshqarish
@@ -177,7 +184,7 @@ if (yearEl) {
     updateCardPositions();
 })();
 
-/* ============ Pedagogik Yondashuv Carousel ============ */
+/* ============ Pedagogik Yondashuv Carousel - Scroll qotib qolish ============ */
 (function initPedagogyCarousel() {
     var container = kaOne('#pedagogyCarousel');
     if (!container) return;
@@ -189,6 +196,7 @@ if (yearEl) {
     
     var currentIndex = 0;
     var totalCards = cards.length;
+    var sectionLocked = false;
     
     // Har bir qadam uchun rasm
     var stepImages = [
@@ -235,32 +243,38 @@ if (yearEl) {
         }
     }
     
-    // Scroll bilan carousel boshqaruvi
-    var lastScrollTop = 0;
-    var scrollTimeout;
-    
-    window.addEventListener('scroll', function() {
+    // Section scroll position aniqlash
+    function isSectionInView() {
         var rect = container.getBoundingClientRect();
-        var sectionTop = rect.top;
-        var sectionHeight = rect.height;
-        
-        if (sectionTop < 200 && sectionTop > -sectionHeight + 200) {
-            var scrollTop = window.scrollY || window.pageYOffset;
-            var delta = scrollTop - lastScrollTop;
-            
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(function() {
-                if (Math.abs(delta) > 50) {
-                    if (delta > 0 && currentIndex < totalCards - 1) {
-                        currentIndex++;
-                    } else if (delta < 0 && currentIndex > 0) {
-                        currentIndex--;
-                    }
-                    updateCardPositions();
-                }
-                lastScrollTop = scrollTop;
-            }, 100);
+        return rect.top < 150 && rect.bottom > window.innerHeight - 150;
+    }
+    
+    // Scroll bilan carousel boshqaruvi - LOCK effekti
+    window.addEventListener('scroll', function() {
+        if (!isSectionInView()) {
+            sectionLocked = false;
+            return;
         }
+        
+        if (sectionLocked) return;
+        
+        sectionLocked = true;
+        
+        setTimeout(function() {
+            if (currentIndex < totalCards - 1) {
+                currentIndex++;
+                updateCardPositions();
+                
+                // Oxirgi qadamdan keyin section'dan chiqish
+                if (currentIndex >= totalCards - 1) {
+                    setTimeout(function() {
+                        sectionLocked = false;
+                    }, 800);
+                }
+            } else {
+                sectionLocked = false;
+            }
+        }, 150);
     }, { passive: true });
     
     // Click bilan boshqarish
