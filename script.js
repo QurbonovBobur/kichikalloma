@@ -99,7 +99,7 @@ if (kaForm && kaSubmit) {
             kaForm.reset();
             kaSubmit.disabled = false;
             kaSubmit.innerHTML = 'Yuborish <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
-            kaShowToast("Rahmat! 🚀 Tez orada siz bilan bog'lanamiz.");
+            kaShowToast("Rahmat! Tez orada siz bilan bog'lanamiz.");
         }, 900);
     });
 }

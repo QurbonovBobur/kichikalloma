@@ -384,45 +384,58 @@ section {
 }
 
 /* ============ MARQUEE ============ */
+/* ============ MARQUEE ============ */
 .marquee {
     margin-top: 34px;
     background: #fff6df;
     border-block: 1px solid var(--line);
     padding: 15px 0;
     overflow: hidden;
-    position: relative
+    position: relative;
+    white-space: nowrap;
+    /* Kontent pastga tushib ketmasligi uchun */
 }
 
 .marquee-track {
-    display: flex;
+    display: inline-flex;
+    /* Moslashuvchan kenglik */
     gap: 44px;
     width: max-content;
-    animation: marquee 32s linear infinite
+    animation: marquee-anim 20s linear infinite;
+    /* Tezligi 20s */
+    will-change: transform;
 }
 
 .marquee:hover .marquee-track {
-    animation-play-state: paused
+    animation-play-state: paused;
 }
 
 .marquee-track span {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 10px;
     font-weight: 800;
     font-size: 14px;
     color: #7a5c07;
-    white-space: nowrap
+    white-space: nowrap;
+    padding-right: 44px;
+    /* Bo'sh joy ochilib qolmasligi uchun masofa */
 }
 
 .marquee-track span::after {
     content: '✦';
     color: var(--primary);
-    margin-left: 34px
+    margin-left: 34px;
 }
 
-@keyframes marquee {
-    to {
-        transform: translateX(-50%)
+@keyframes marquee-anim {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(-50%, 0, 0);
+        /* JS kontentni 2 baravar qilgani uchun roppa-rosa -50% siljiydi */
     }
 }
 
@@ -1721,8 +1734,13 @@ section {
 }
 
 @keyframes teamScroll {
-    from { transform: translateX(0) }
-    to   { transform: translateX(-50%) }
+    from {
+        transform: translateX(0)
+    }
+
+    to {
+        transform: translateX(-50%)
+    }
 }
 
 .team-card {
@@ -1901,9 +1919,9 @@ footer {
     bottom: 26px;
     left: 50%;
     transform: translate(-50%, 80px);
-    background: var(--navy);
-    color: #fff;
-    border: 1px solid rgba(250, 176, 3, .5);
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--primary);
     border-radius: 999px;
     padding: 14px 26px;
     font-weight: 700;
