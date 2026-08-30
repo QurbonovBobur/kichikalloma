@@ -92,138 +92,108 @@
         <div class="starfield" data-stars="90"></div>
         <div class="cosmos-glow"></div>
         <div class="container">
-            <div class="sec-head reveal">
+            <div class="sec-head reveal cosmos-title-block">
                 <span class="sec-badge">Kosmik ekotizim</span>
                 <h2>Hayot uchun kerakli 8 ta eng muhim ko'nikma.</h2>
                 <p>Har bir sayyora ularning yashirin salohiyatini ochishga yordam beradi</p>
             </div>
 
-            <!-- Quyosh va bitta o'qda 8 sayyora aylanishi animatsiyasi -->
-            <div class="solar-system-wrapper reveal">
-                <div class="solar-system">
-                    <!-- Markaziy Quyosh -->
-                    <div class="sun-center" title="Quyosh — Barcha bilimlarning markazi">
-                        <img src="img/sun.png" alt="Quyosh" class="sun-img">
-                        <div class="sun-glow"></div>
+            <!-- Yangi sayyora kartalari -->
+            <div class="planet-cards-container reveal" id="planetCardsContainer">
+                <div class="planet-card-stack">
+                    <!-- 1. Merkuriy -->
+                    <div class="planet-card-item" data-planet="merkuriy">
+                        <div class="planet-card-content">
+                            <img src="img/merkuriy.png" alt="Merkuriy" class="planet-card-img">
+                            <div class="planet-card-info">
+                                <span class="planet-card-tag">Kashfiyot</span>
+                                <h4 class="planet-card-title">Merkuriy</h4>
+                                <div class="planet-card-skill">Kasblar</div>
+                                <p class="planet-card-desc">Kelajak kasblarini kashf etish va maqsad qo'yish.</p>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Bitta Yagona Orbit O'qi -->
-                    <div class="main-orbit-ring">
-                        <div class="main-orbit-rotator">
-                            <!-- 1. Merkuriy (0 deg) -->
-                            <div class="planet-slot slot-0">
-                                <div class="planet-on-orbit">
-                                    <img src="img/merkuriy.png" alt="Merkuriy">
-                                    <span class="orbit-planet-chip">Kasblar</span>
-                                    <div class="orbit-planet-popover">
-                                        <span class="popover-tag">Kashfiyot</span>
-                                        <h4 class="popover-title">Merkuriy</h4>
-                                        <div class="popover-skill">Kasblar</div>
-                                        <p class="popover-desc">Kelajak kasblarini kashf etish va maqsad qo'yish.</p>
-                                    </div>
-                                </div>
+                    <!-- 2. Venera -->
+                    <div class="planet-card-item" data-planet="venera">
+                        <div class="planet-card-content">
+                            <img src="img/venera.png" alt="Venera" class="planet-card-img">
+                            <div class="planet-card-info">
+                                <span class="planet-card-tag">Iqtisodiyot</span>
+                                <h4 class="planet-card-title">Venera</h4>
+                                <div class="planet-card-skill">Virtual do'kon</div>
+                                <p class="planet-card-desc">O'z mehnati bilan topgan tangalarini to'g'ri sarflash.</p>
                             </div>
-
-                            <!-- 2. Venera (45 deg) -->
-                            <div class="planet-slot slot-45">
-                                <div class="planet-on-orbit">
-                                    <img src="img/venera.png" alt="Venera">
-                                    <span class="orbit-planet-chip">Virtual do'kon</span>
-                                    <div class="orbit-planet-popover">
-                                        <span class="popover-tag">Iqtisodiyot</span>
-                                        <h4 class="popover-title">Venera</h4>
-                                        <div class="popover-skill">Virtual do'kon</div>
-                                        <p class="popover-desc">O'z mehnati bilan topgan tangalarini to'g'ri sarflash.
-                                        </p>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <!-- 3. Yer -->
+                    <div class="planet-card-item" data-planet="yer">
+                        <div class="planet-card-content">
+                            <img src="img/earth.png" alt="Yer" class="planet-card-img">
+                            <div class="planet-card-info">
+                                <span class="planet-card-tag">Kognitiv</span>
+                                <h4 class="planet-card-title">Yer</h4>
+                                <div class="planet-card-skill">Kognitiv ta'lim</div>
+                                <p class="planet-card-desc">Sokratik AI-ustoz bilan mustaqil fikrlashni o'rganish.</p>
                             </div>
-
-                            <!-- 3. Yer (90 deg) -->
-                            <div class="planet-slot slot-90">
-                                <div class="planet-on-orbit">
-                                    <img src="img/earth.png" alt="Yer">
-                                    <span class="orbit-planet-chip">Kognitiv ta'lim</span>
-                                    <div class="orbit-planet-popover">
-                                        <span class="popover-tag">Kognitiv</span>
-                                        <h4 class="popover-title">Yer</h4>
-                                        <div class="popover-skill">Kognitiv ta'lim</div>
-                                        <p class="popover-desc">Sokratik AI-ustoz bilan mustaqil fikrlashni o'rganish.
-                                        </p>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <!-- 4. Mars -->
+                    <div class="planet-card-item" data-planet="mars">
+                        <div class="planet-card-content">
+                            <img src="img/mars.png" alt="Mars" class="planet-card-img">
+                            <div class="planet-card-info">
+                                <span class="planet-card-tag">Harakat</span>
+                                <h4 class="planet-card-title">Mars</h4>
+                                <div class="planet-card-skill">Jismoniy faollik</div>
+                                <p class="planet-card-desc">Ekrandan uzilib, real tana harakatlarini bajarish.</p>
                             </div>
-
-                            <!-- 4. Mars (135 deg) -->
-                            <div class="planet-slot slot-135">
-                                <div class="planet-on-orbit">
-                                    <img src="img/mars.png" alt="Mars">
-                                    <span class="orbit-planet-chip">Jismoniy faollik</span>
-                                    <div class="orbit-planet-popover">
-                                        <span class="popover-tag">Harakat</span>
-                                        <h4 class="popover-title">Mars</h4>
-                                        <div class="popover-skill">Jismoniy faollik</div>
-                                        <p class="popover-desc">Ekrandan uzilib, real tana harakatlarini bajarish.</p>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <!-- 5. Yupiter -->
+                    <div class="planet-card-item" data-planet="yupiter">
+                        <div class="planet-card-content">
+                            <img src="img/jupiter.png" alt="Yupiter" class="planet-card-img">
+                            <div class="planet-card-info">
+                                <span class="planet-card-tag">Intizom</span>
+                                <h4 class="planet-card-title">Yupiter</h4>
+                                <div class="planet-card-skill">O'z-o'zini boshqarish</div>
+                                <p class="planet-card-desc">Kunlik reja tuzish va vaqtni to'g'ri taqsimlash.</p>
                             </div>
-
-                            <!-- 5. Yupiter (180 deg) -->
-                            <div class="planet-slot slot-180">
-                                <div class="planet-on-orbit">
-                                    <img src="img/jupiter.png" alt="Yupiter">
-                                    <span class="orbit-planet-chip">O'z-o'zini boshqarish</span>
-                                    <div class="orbit-planet-popover">
-                                        <span class="popover-tag">Intizom</span>
-                                        <h4 class="popover-title">Yupiter</h4>
-                                        <div class="popover-skill">O'z-o'zini boshqarish</div>
-                                        <p class="popover-desc">Kunlik reja tuzish va vaqtni to'g'ri taqsimlash.</p>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <!-- 6. Saturn -->
+                    <div class="planet-card-item" data-planet="saturn">
+                        <div class="planet-card-content">
+                            <img src="img/saturn.png" alt="Saturn" class="planet-card-img">
+                            <div class="planet-card-info">
+                                <span class="planet-card-tag">Mantiq</span>
+                                <h4 class="planet-card-title">Saturn</h4>
+                                <div class="planet-card-skill">Matematika</div>
+                                <p class="planet-card-desc">Mantiqiy fikrlashni kuchaytiruvchi bosqichli masalalar.</p>
                             </div>
-
-                            <!-- 6. Saturn (225 deg) -->
-                            <div class="planet-slot slot-225">
-                                <div class="planet-on-orbit">
-                                    <img src="img/saturn.png" alt="Saturn">
-                                    <span class="orbit-planet-chip">Matematika</span>
-                                    <div class="orbit-planet-popover">
-                                        <span class="popover-tag">Mantiq</span>
-                                        <h4 class="popover-title">Saturn</h4>
-                                        <div class="popover-skill">Matematika</div>
-                                        <p class="popover-desc">Mantiqiy fikrlashni kuchaytiruvchi bosqichli masalalar.
-                                        </p>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <!-- 7. Uran -->
+                    <div class="planet-card-item" data-planet="uran">
+                        <div class="planet-card-content">
+                            <img src="img/uran.png" alt="Uran" class="planet-card-img">
+                            <div class="planet-card-info">
+                                <span class="planet-card-tag">Til</span>
+                                <h4 class="planet-card-title">Uran</h4>
+                                <div class="planet-card-skill">Ingliz tili</div>
+                                <p class="planet-card-desc">Faol so'z boyligi va to'g'ri talaffuz amaliyoti.</p>
                             </div>
-
-                            <!-- 7. Uran (270 deg) -->
-                            <div class="planet-slot slot-270">
-                                <div class="planet-on-orbit">
-                                    <img src="img/uran.png" alt="Uran">
-                                    <span class="orbit-planet-chip">Ingliz tili</span>
-                                    <div class="orbit-planet-popover">
-                                        <span class="popover-tag">Til</span>
-                                        <h4 class="popover-title">Uran</h4>
-                                        <div class="popover-skill">Ingliz tili</div>
-                                        <p class="popover-desc">Faol so'z boyligi va to'g'ri talaffuz amaliyoti.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 8. Neptun (315 deg) -->
-                            <div class="planet-slot slot-315">
-                                <div class="planet-on-orbit">
-                                    <img src="img/neptun.png" alt="Neptun">
-                                    <span class="orbit-planet-chip">Emotsional savodxonlik</span>
-                                    <div class="orbit-planet-popover">
-                                        <span class="popover-tag">Psixologiya</span>
-                                        <h4 class="popover-title">Neptun</h4>
-                                        <div class="popover-skill">Emotsional savodxonlik</div>
-                                        <p class="popover-desc">Kichkintoyning o'z hissiyotlarini tushunishi va
-                                            boshqarishi.</p>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <!-- 8. Neptun -->
+                    <div class="planet-card-item" data-planet="neptun">
+                        <div class="planet-card-content">
+                            <img src="img/neptun.png" alt="Neptun" class="planet-card-img">
+                            <div class="planet-card-info">
+                                <span class="planet-card-tag">Psixologiya</span>
+                                <h4 class="planet-card-title">Neptun</h4>
+                                <div class="planet-card-skill">Emotsional savodxonlik</div>
+                                <p class="planet-card-desc">Kichkintoyning o'z hissiyotlarini tushunishi va boshqarishi.</p>
                             </div>
                         </div>
                     </div>
@@ -232,36 +202,43 @@
         </div>
     </section>
 
-    <!-- ================= 4. QANDAY ISHLAYDI (ZINA shaklida) ================= -->
+    <!-- ================= 4. QANDAY ISHLAYDI (PEDAGOGIK YONDASHUV - KARUSEL) ================= -->
     <section class="how" id="qanday">
         <div class="container">
-            <div class="sec-head reveal">
+            <div class="sec-head reveal how-title-block">
                 <span class="sec-badge">Pedagogik yondashuv</span>
                 <h2>Majburlashsiz o'rganish. Qiziqishdan amaliy natijagacha 4 qadam.</h2>
             </div>
-            <div class="steps">
-                <article class="step reveal">
-                    <div class="step-num">01</div>
-                    <h3>Maqsadli sayohat</h3>
-                    <p>Bola Quyosh tizimidagi o'zi kashf etmoqchi bo'lgan qobiliyat sayyorasini tanlaydi.</p>
-                </article>
-                <article class="step reveal d1">
-                    <div class="step-num">02</div>
-                    <h3>Fikrlab o'rganish</h3>
-                    <p>Sun'iy intellekt bolaning o'rniga vazifani bajarmaydi. U yo'naltiruvchi savollar orqali bolani
-                        to'g'ri javob topishga undaydi.</p>
-                </article>
-                <article class="step reveal d2">
-                    <div class="step-num">03</div>
-                    <h3>Amaliy harakat</h3>
-                    <p>O'qish, mashq qilish yoki o'z hissiyotlarini yozish orqali missiya yakunlanadi.</p>
-                </article>
-                <article class="step reveal d3">
-                    <div class="step-num">04</div>
-                    <h3>Munosib mukofot</h3>
-                    <p>Har bir to'g'ri qadam uchun "Gold Coin" yig'iladi. Bu bolada o'z mehnati samarasini ko'rish
-                        hissini uyg'otadi.</p>
-                </article>
+            
+            <!-- Yangi karusel layout -->
+            <div class="pedagogy-carousel-container reveal" id="pedagogyCarousel">
+                <div class="pedagogy-cards-wrapper">
+                    <article class="pedagogy-card active" data-step="1">
+                        <div class="pedagogy-card-num">01</div>
+                        <h3>Maqsadli sayohat</h3>
+                        <p>Bola Quyosh tizimidagi o'zi kashf etmoqchi bo'lgan qobiliyat sayyorasini tanlaydi.</p>
+                    </article>
+                    <article class="pedagogy-card next-1" data-step="2">
+                        <div class="pedagogy-card-num">02</div>
+                        <h3>Fikrlab o'rganish</h3>
+                        <p>Sun'iy intellekt bolaning o'rniga vazifani bajarmaydi. U yo'naltiruvchi savollar orqali bolani to'g'ri javob topishga undaydi.</p>
+                    </article>
+                    <article class="pedagogy-card next-2" data-step="3">
+                        <div class="pedagogy-card-num">03</div>
+                        <h3>Amaliy harakat</h3>
+                        <p>O'qish, mashq qilish yoki o'z hissiyotlarini yozish orqali missiya yakunlanadi.</p>
+                    </article>
+                    <article class="pedagogy-card next-3" data-step="4">
+                        <div class="pedagogy-card-num">04</div>
+                        <h3>Munosib mukofot</h3>
+                        <p>Har bir to'g'ri qadam uchun "Gold Coin" yig'iladi. Bu bolada o'z mehnati samarasini ko'rish hissini uyg'otadi.</p>
+                    </article>
+                </div>
+                <div class="pedagogy-image-area">
+                    <div class="pedagogy-image-placeholder" id="pedagogyImagePlaceholder">
+                        <img src="img/earth.png" alt="Qadam rasmi" id="pedagogyActiveImg">
+                    </div>
+                </div>
             </div>
         </div>
     </section>

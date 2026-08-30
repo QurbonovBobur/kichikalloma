@@ -461,17 +461,17 @@ section {
     font-weight: 600
 }
 
-/* ============ 3. SAYYORALAR (qorong'u bo'lim) ============ */
+/* ============ 3. SAYYORALAR (och rangli bo'lim) ============ */
 .cosmos {
-    background: var(--navy);
-    color: #fff;
+    background: #fff8e7;
+    color: var(--ink);
     padding: 110px 0;
     position: relative;
     overflow: hidden;
 }
 
 .cosmos .sec-head p {
-    color: #a9b0cc;
+    color: var(--muted);
 }
 
 .starfield {
@@ -483,8 +483,8 @@ section {
 .starfield i {
     position: absolute;
     border-radius: 50%;
-    background: #fff;
-    opacity: .25;
+    background: var(--primary);
+    opacity: .6;
     animation: twinkle 3s ease-in-out infinite;
 }
 
@@ -502,25 +502,29 @@ section {
     transform: translateX(-50%);
     width: 900px;
     height: 500px;
-    background: radial-gradient(closest-side, rgba(250, 176, 3, .16), transparent 70%);
+    background: radial-gradient(closest-side, rgba(250, 176, 3, .12), transparent 70%);
     pointer-events: none;
 }
 
-/* ============ QUYOSH VA SAYYORALAR (BITTA O'Q) ============ */
-.solar-system-wrapper {
-    margin: 0 auto 30px;
-    width: 100%;
-    max-width: 800px;
-    aspect-ratio: 1 / 1;
+/* ============ SAYYORA KARTALARI (STACKED CAROUSEL) ============ */
+.planet-cards-container {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-    z-index: 3;
+    height: 520px;
+    perspective: 1200px;
+    overflow: hidden;
+    margin-top: 40px;
 }
 
-.solar-system {
+.cosmos-title-block {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 30px 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(250, 176, 3, 0.08);
+}
+
+.planet-card-stack {
     position: relative;
     width: 100%;
     height: 100%;
@@ -529,25 +533,168 @@ section {
     justify-content: center;
 }
 
-.solar-system:hover .main-orbit-rotator,
-.solar-system:hover .planet-on-orbit {
-    animation-play-state: paused;
+.planet-card-item {
+    position: absolute;
+    width: 340px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 28px;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, z-index 0s 0.3s;
+    box-shadow: 0 8px 24px rgba(18, 22, 43, 0.08);
+    cursor: pointer;
 }
 
-/* ---- Markaziy Quyosh (GLOWSIZ) ---- */
-.sun-center {
+.planet-card-item::before {
+    content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150px;
-    height: 150px;
-    z-index: 2; /* Quyosh eng pastda */
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, rgba(255, 208, 0, 0.3), transparent 40%, transparent 60%, rgba(255, 208, 0, 0.3));
+    border-radius: 26px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.planet-card-item.active::before {
+    opacity: 1;
+}
+
+.planet-card-content {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.planet-card-img {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    cursor: pointer;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.planet-card-info {
+    flex: 1;
+}
+
+.planet-card-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: rgba(250, 176, 3, 0.15);
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-bottom: 6px;
+}
+
+.planet-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 4px 0;
+    font-family: 'Unbounded', sans-serif;
+}
+
+.planet-card-skill {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.planet-card-desc {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Stack holatlari - dastlab faqat birinchi 4 tasi ko'rinadi */
+.planet-card-item:nth-child(1) { --stack-order: 1; }
+.planet-card-item:nth-child(2) { --stack-order: 2; }
+.planet-card-item:nth-child(3) { --stack-order: 3; }
+.planet-card-item:nth-child(4) { --stack-order: 4; }
+.planet-card-item:nth-child(5) { --stack-order: 5; }
+.planet-card-item:nth-child(6) { --stack-order: 6; }
+.planet-card-item:nth-child(7) { --stack-order: 7; }
+.planet-card-item:nth-child(8) { --stack-order: 8; }
+
+/* Active card - markazda */
+.planet-card-item.active {
+    transform: translateX(0) translateY(0) scale(1) rotateY(0deg);
+    z-index: 10;
+    opacity: 1;
+    box-shadow: 0 20px 50px rgba(250, 176, 3, 0.2);
+}
+
+/* Chap tomondagi kartalar (karusel effekti) */
+.planet-card-item.prev-1 {
+    transform: translateX(-140px) translateY(-30px) scale(0.92) rotateY(15deg);
+    z-index: 9;
+    opacity: 0.7;
+}
+
+.planet-card-item.prev-2 {
+    transform: translateX(-220px) translateY(-50px) scale(0.85) rotateY(25deg);
+    z-index: 8;
+    opacity: 0.5;
+}
+
+.planet-card-item.prev-3 {
+    transform: translateX(-280px) translateY(-60px) scale(0.78) rotateY(30deg);
+    z-index: 7;
+    opacity: 0.3;
+}
+
+/* O'ng tomondagi kartalar */
+.planet-card-item.next-1 {
+    transform: translateX(140px) translateY(-30px) scale(0.92) rotateY(-15deg);
+    z-index: 9;
+    opacity: 0.7;
+}
+
+.planet-card-item.next-2 {
+    transform: translateX(220px) translateY(-50px) scale(0.85) rotateY(-25deg);
+    z-index: 8;
+    opacity: 0.5;
+}
+
+.planet-card-item.next-3 {
+    transform: translateX(280px) translateY(-60px) scale(0.78) rotateY(-30deg);
+    z-index: 7;
+    opacity: 0.3;
+}
+
+/* Dastlabki holat - pastda yashiringan */
+.planet-card-item.hidden-below {
+    transform: translateY(200px) scale(0.8);
+    z-index: 5;
+    opacity: 0;
+}
+
+/* 2 qatorga o'tish holati */
+.planet-card-stack.two-rows .planet-card-item.active {
+    transform: translateX(0) translateY(-60px) scale(1);
+}
+
+.planet-card-stack.two-rows .planet-card-item.prev-1,
+.planet-card-stack.two-rows .planet-card-item.next-1 {
+    transform: translateX(-120px) translateY(-60px) scale(0.9) rotateY(10deg);
+}
+
+.planet-card-stack.two-rows .planet-card-item.prev-2,
+.planet-card-stack.two-rows .planet-card-item.next-2 {
+    transform: translateX(120px) translateY(-60px) scale(0.9) rotateY(-10deg);
 }
 
 .sun-img {
@@ -728,13 +875,12 @@ section {
     transform: translateX(-50%);
     font-size: 14px;
     font-weight: 700;
-    color: #ffb300;
-    background: rgba(11, 16, 38, 0.94);
+    color: var(--ink);
+    background: rgba(255, 208, 0, 0.15);
     border: 1px solid rgba(255, 179, 0, 0.5);
     padding: 4px 12px;
     border-radius: 999px;
     white-space: nowrap;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.7);
     pointer-events: none;
     transition: opacity 0.25s ease, transform 0.25s ease;
 }
@@ -750,13 +896,12 @@ section {
     bottom: calc(100% + 16px);
     left: 50%;
     transform: translateX(-50%) scale(0.85);
-    background: rgba(15, 22, 50, 0.97);
-    border: 1px solid rgba(255, 179, 0, 0.6);
+    background: #fff;
+    border: 1px solid rgba(255, 179, 0, 0.3);
     border-radius: 16px;
     padding: 14px 16px;
     width: 220px;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(14px);
+    box-shadow: 0 18px 45px rgba(18, 22, 43, 0.12);
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
@@ -796,7 +941,7 @@ section {
 .popover-title {
     font-size: 15px;
     font-weight: 700;
-    color: #fff;
+    color: var(--ink);
     margin: 2px 0;
     font-family: 'Unbounded', sans-serif;
 }
@@ -811,7 +956,7 @@ section {
 .popover-desc {
     font-size: 11.5px;
     line-height: 1.45;
-    color: #c4c9e2;
+    color: var(--muted);
     margin: 0;
     font-weight: 500;
 }
@@ -826,8 +971,8 @@ section {
 }
 
 .planet-card {
-    background: rgba(255, 255, 255, .045);
-    border: 1px solid rgba(255, 255, 255, .09);
+    background: #fff;
+    border: 1px solid var(--line);
     border-radius: 24px;
     padding: 28px 24px;
     transition: transform .35s ease, border-color .35s, box-shadow .35s;
@@ -837,8 +982,8 @@ section {
 .planet-card:hover,
 .planet-card.card-highlight {
     transform: translateY(-9px);
-    border-color: rgba(250, 176, 3, .85);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, .5), 0 0 40px rgba(250, 176, 3, .35);
+    border-color: rgba(250, 176, 3, .5);
+    box-shadow: 0 24px 60px rgba(250, 176, 3, .15);
 }
 
 .planet-tag {
@@ -860,7 +1005,6 @@ section {
     height: 92px;
     border-radius: 50%;
     object-fit: cover;
-    /* Glow olib tashlandi */
 }
 
 .planet-name {
@@ -881,79 +1025,189 @@ section {
 
 .planet-desc {
     margin-top: 10px;
-    color: #b6bcd6;
+    color: var(--muted);
     font-size: 13.5px;
     font-weight: 500;
     line-height: 1.65;
 }
 
-/* ============ 4. QANDAY ISHLAYDI — ZINA (staircase) ============ */
+/* ============ 4. QANDAY ISHLAYDI — PEDAGOGIK KARUSEL ============ */
 .how {
     padding: 110px 0 140px
 }
 
-.steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    align-items: start
-}
-
-.step {
+.how-title-block {
     background: #fff;
     border: 1px solid var(--line);
-    border-radius: 24px;
-    padding: 30px 26px;
+    border-radius: 20px;
+    padding: 30px 40px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 30px rgba(250, 176, 3, 0.08);
+}
+
+.pedagogy-carousel-container {
+    display: grid;
+    grid-template-columns: 1fr 500px;
+    gap: 60px;
+    align-items: center;
     position: relative;
-    transition: transform .3s, box-shadow .3s
+    height: 480px;
+    perspective: 1500px;
 }
 
-.step:hover {
-    transform: translateY(-7px);
-    box-shadow: 0 24px 50px rgba(18, 22, 43, .1)
+.pedagogy-cards-wrapper {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Zina pog'onalarlari */
-.step:nth-child(1) {
-    margin-top: 0
+.pedagogy-card {
+    position: absolute;
+    width: 320px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 26px 28px;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease, z-index 0s 0.35s;
+    box-shadow: 0 8px 24px rgba(18, 22, 43, 0.08);
+    cursor: pointer;
 }
 
-.step:nth-child(2) {
-    margin-top: 70px
+.pedagogy-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, rgba(255, 208, 0, 0.25), transparent 40%, transparent 60%, rgba(255, 208, 0, 0.25));
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-.step:nth-child(3) {
-    margin-top: 140px
+.pedagogy-card.active::before {
+    opacity: 1;
 }
 
-.step:nth-child(4) {
-    margin-top: 210px
-}
-
-.step-num {
-    width: 54px;
-    height: 54px;
-    border-radius: 16px;
+.pedagogy-card-num {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
     background: var(--primary-soft);
     color: var(--primary);
     font-family: 'Unbounded';
     font-weight: 700;
-    font-size: 17px;
+    font-size: 16px;
     display: grid;
     place-items: center;
-    margin-bottom: 20px
+    margin-bottom: 18px;
 }
 
-.step h3 {
-    font-size: 16px;
+.pedagogy-card h3 {
+    font-size: 17px;
     font-weight: 600;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    color: var(--ink);
 }
 
-.step p {
+.pedagogy-card p {
     color: var(--muted);
-    font-size: 14px;
-    font-weight: 600
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Active card - markazda, rasmga nisbatan gorizontal center */
+.pedagogy-card.active {
+    transform: translateX(0) translateY(0) scale(1) rotateY(0deg);
+    z-index: 10;
+    opacity: 1;
+    box-shadow: 0 15px 40px rgba(250, 176, 3, 0.18);
+}
+
+/* Chap tomondagi kartalar (karusel effekti - soat vidjetlaridek) */
+.pedagogy-card.prev-1 {
+    transform: translateX(-100px) translateY(-25px) scale(0.9) rotateY(12deg);
+    z-index: 9;
+    opacity: 0.65;
+}
+
+.pedagogy-card.prev-2 {
+    transform: translateX(-170px) translateY(-45px) scale(0.82) rotateY(22deg);
+    z-index: 8;
+    opacity: 0.4;
+}
+
+.pedagogy-card.prev-3 {
+    transform: translateX(-220px) translateY(-55px) scale(0.75) rotateY(28deg);
+    z-index: 7;
+    opacity: 0.25;
+}
+
+/* O'ng tomondagi kartalar */
+.pedagogy-card.next-1 {
+    transform: translateX(100px) translateY(-25px) scale(0.9) rotateY(-12deg);
+    z-index: 9;
+    opacity: 0.65;
+}
+
+.pedagogy-card.next-2 {
+    transform: translateX(170px) translateY(-45px) scale(0.82) rotateY(-22deg);
+    z-index: 8;
+    opacity: 0.4;
+}
+
+.pedagogy-card.next-3 {
+    transform: translateX(220px) translateY(-55px) scale(0.75) rotateY(-28deg);
+    z-index: 7;
+    opacity: 0.25;
+}
+
+/* Yashirin holat - dumaloq harakat uchun yuqoriga kirib ketadi */
+.pedagogy-card.hidden-above {
+    transform: translateY(-180px) scale(0.7);
+    z-index: 5;
+    opacity: 0;
+}
+
+/* Rasm joyi */
+.pedagogy-image-area {
+    position: relative;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pedagogy-image-placeholder {
+    width: 380px;
+    height: 380px;
+    background: #fff8e7;
+    border: 2px dashed rgba(255, 179, 0, 0.4);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.pedagogy-image-placeholder img {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(250, 176, 3, 0.2));
+    transition: transform 0.5s ease, opacity 0.4s ease;
+}
+
+.pedagogy-image-placeholder.img-changing img {
+    transform: scale(0.85);
+    opacity: 0.7;
 }
 
 /* ============ 5. AFZALLIKLAR — PIN BOARD ============ */

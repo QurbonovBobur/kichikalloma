@@ -88,6 +88,193 @@ if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
 }
 
+/* ============ Sayyora Kartalari Carousel ============ */
+(function initPlanetCardsCarousel() {
+    var container = kaOne('#planetCardsContainer');
+    if (!container) return;
+    
+    var cards = kaAll('.planet-card-item', container);
+    if (cards.length === 0) return;
+    
+    var currentIndex = 0;
+    var totalCards = cards.length;
+    var hasPassedFour = false;
+    
+    function updateCardPositions() {
+        cards.forEach(function(card, index) {
+            card.classList.remove('active', 'prev-1', 'prev-2', 'prev-3', 'next-1', 'next-2', 'next-3', 'hidden-below');
+            
+            var relPos = (index - currentIndex + totalCards) % totalCards;
+            if (relPos < 0) relPos += totalCards;
+            
+            if (relPos === 0) {
+                card.classList.add('active');
+            } else if (relPos === 1) {
+                card.classList.add('next-1');
+            } else if (relPos === 2) {
+                card.classList.add('next-2');
+            } else if (relPos === 3) {
+                card.classList.add('next-3');
+            } else if (relPos === totalCards - 1) {
+                card.classList.add('prev-1');
+            } else if (relPos === totalCards - 2) {
+                card.classList.add('prev-2');
+            } else if (relPos === totalCards - 3) {
+                card.classList.add('prev-3');
+            } else {
+                card.classList.add('hidden-below');
+            }
+            
+            // 4 tadan keyin 2 qatorga o'tish
+            if (hasPassedFour && currentIndex >= 4) {
+                container.classList.add('two-rows');
+            } else {
+                container.classList.remove('two-rows');
+            }
+        });
+    }
+    
+    // Scroll bilan carousel boshqaruvi
+    var lastScrollTop = 0;
+    var scrollTimeout;
+    
+    window.addEventListener('scroll', function() {
+        var rect = container.getBoundingClientRect();
+        var sectionTop = rect.top;
+        var sectionHeight = rect.height;
+        
+        // Section ekranning o'rtasida bo'lsa
+        if (sectionTop < 200 && sectionTop > -sectionHeight + 200) {
+            var scrollTop = window.scrollY || window.pageYOffset;
+            var delta = scrollTop - lastScrollTop;
+            
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(function() {
+                if (Math.abs(delta) > 50) {
+                    if (delta > 0 && currentIndex < totalCards - 1) {
+                        currentIndex++;
+                        if (currentIndex === 4) hasPassedFour = true;
+                    } else if (delta < 0 && currentIndex > 0) {
+                        currentIndex--;
+                    }
+                    updateCardPositions();
+                }
+                lastScrollTop = scrollTop;
+            }, 100);
+        }
+    }, { passive: true });
+    
+    // Click bilan ham boshqarish
+    cards.forEach(function(card, index) {
+        card.addEventListener('click', function() {
+            currentIndex = index;
+            if (currentIndex >= 4) hasPassedFour = true;
+            updateCardPositions();
+        });
+    });
+    
+    // Dastlabki holat
+    updateCardPositions();
+})();
+
+/* ============ Pedagogik Yondashuv Carousel ============ */
+(function initPedagogyCarousel() {
+    var container = kaOne('#pedagogyCarousel');
+    if (!container) return;
+    
+    var cards = kaAll('.pedagogy-card', container);
+    var imagePlaceholder = kaOne('#pedagogyImagePlaceholder');
+    var activeImg = kaOne('#pedagogyActiveImg');
+    if (cards.length === 0 || !imagePlaceholder) return;
+    
+    var currentIndex = 0;
+    var totalCards = cards.length;
+    
+    // Har bir qadam uchun rasm
+    var stepImages = [
+        'img/earth.png',
+        'img/mars.png',
+        'img/jupiter.png',
+        'img/saturn.png'
+    ];
+    
+    function updateCardPositions() {
+        cards.forEach(function(card, index) {
+            card.classList.remove('active', 'prev-1', 'prev-2', 'prev-3', 'next-1', 'next-2', 'next-3', 'hidden-above');
+            
+            var relPos = (index - currentIndex + totalCards) % totalCards;
+            if (relPos < 0) relPos += totalCards;
+            
+            if (relPos === 0) {
+                card.classList.add('active');
+            } else if (relPos === 1) {
+                card.classList.add('next-1');
+            } else if (relPos === 2) {
+                card.classList.add('next-2');
+            } else if (relPos === 3) {
+                card.classList.add('next-3');
+            } else if (relPos === totalCards - 1) {
+                card.classList.add('prev-1');
+            } else if (relPos === totalCards - 2) {
+                card.classList.add('prev-2');
+            } else if (relPos === totalCards - 3) {
+                card.classList.add('prev-3');
+            } else {
+                card.classList.add('hidden-above');
+            }
+        });
+        
+        // Rasmni yangilash
+        if (imagePlaceholder && activeImg) {
+            imagePlaceholder.classList.add('img-changing');
+            setTimeout(function() {
+                var imgIndex = currentIndex % stepImages.length;
+                activeImg.src = stepImages[imgIndex];
+                imagePlaceholder.classList.remove('img-changing');
+            }, 250);
+        }
+    }
+    
+    // Scroll bilan carousel boshqaruvi
+    var lastScrollTop = 0;
+    var scrollTimeout;
+    
+    window.addEventListener('scroll', function() {
+        var rect = container.getBoundingClientRect();
+        var sectionTop = rect.top;
+        var sectionHeight = rect.height;
+        
+        if (sectionTop < 200 && sectionTop > -sectionHeight + 200) {
+            var scrollTop = window.scrollY || window.pageYOffset;
+            var delta = scrollTop - lastScrollTop;
+            
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(function() {
+                if (Math.abs(delta) > 50) {
+                    if (delta > 0 && currentIndex < totalCards - 1) {
+                        currentIndex++;
+                    } else if (delta < 0 && currentIndex > 0) {
+                        currentIndex--;
+                    }
+                    updateCardPositions();
+                }
+                lastScrollTop = scrollTop;
+            }, 100);
+        }
+    }, { passive: true });
+    
+    // Click bilan boshqarish
+    cards.forEach(function(card, index) {
+        card.addEventListener('click', function() {
+            currentIndex = index;
+            updateCardPositions();
+        });
+    });
+    
+    // Dastlabki holat
+    updateCardPositions();
+})();
+
 /* ============ Sayyoralar rasmlarini Backend'dan yuklash (Failover Tizimi) ============ */
 (function loadBackendPlanets() {
     fetch('/api/website/planets/')
