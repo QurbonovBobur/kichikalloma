@@ -1,0 +1,1590 @@
+/* ============ ASOSIY SOZLAMALAR (Faqat O'zbek tili) ============ */
+:root {
+    --primary: #ffb300;
+    --primary-600: #ffb700;
+    --primary-soft: rgba(255, 208, 0, 0.138);
+    --ink: #12162b;
+    --navy: #0b1026;
+    --navy-2: #131a3d;
+    --cream: #fffaf1;
+    --paper: #ffffff;
+    --muted: #5d6478;
+    --line: #eee1c4;
+    --r: 24px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+html {
+    scroll-behavior: smooth
+}
+
+body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    line-height: 1.6
+}
+
+h1,
+h2,
+h3,
+.display {
+    font-family: 'Unbounded', sans-serif
+}
+
+img {
+    max-width: 100%;
+    display: block
+}
+
+a {
+    text-decoration: none;
+    color: inherit
+}
+
+section {
+    scroll-margin-top: 110px
+}
+
+.container {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px
+}
+
+::selection {
+    background: var(--primary);
+    color: #1a1200
+}
+
+/* ============ TUGMALAR ============ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 999px;
+    padding: 15px 28px;
+    font-family: 'Manrope';
+    font-weight: 800;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease
+}
+
+.btn svg {
+    transition: transform .25s
+}
+
+.btn:hover svg {
+    transform: translateX(4px)
+}
+
+.btn-primary {
+    background: var(--primary-600);
+    color: #fff;
+    box-shadow: 0 14px 30px rgba(250, 176, 3, .35)
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(250, 176, 3, .45)
+}
+
+.btn-ghost {
+    background: #fff;
+    color: var(--ink);
+    border: 1.5px solid var(--line)
+}
+
+.btn-ghost:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+    box-shadow: 0 14px 30px rgba(18, 22, 43, .08)
+}
+
+.btn-outline-light {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255, 255, 255, .25)
+}
+
+.btn-outline-light:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-3px)
+}
+
+/* ============ NAVBAR ============ */
+#navbar {
+    position: fixed;
+    top: 16px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 20px
+}
+
+.nav-pill {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: rgba(255, 255, 255, .88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 12px 10px 20px;
+    box-shadow: 0 8px 26px rgba(18, 22, 43, .06);
+    transition: box-shadow .3s
+}
+
+.nav-pill.scrolled {
+    box-shadow: 0 14px 40px rgba(18, 22, 43, .12)
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 16px
+}
+
+.logo-mark {
+    height: 38px;
+    border-radius: 12px;
+    background: url("logo.png");
+    place-items: center;
+    flex-shrink: 0
+}
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #3c4258
+}
+
+.nav-links a {
+    transition: color .2s
+}
+
+.nav-links a:hover {
+    color: var(--primary-600)
+}
+
+.nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.nav-cta .btn {
+    padding: 11px 20px;
+    font-size: 14px
+}
+
+#menuBtn {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px
+}
+
+#menuBtn span {
+    width: 18px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: .3s
+}
+
+#menuBtn.open span:nth-child(1) {
+    transform: translateY(3.5px) rotate(45deg)
+}
+
+#menuBtn.open span:nth-child(2) {
+    transform: translateY(-3.5px) rotate(-45deg)
+}
+
+#mobileMenu {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    right: 20px;
+    z-index: 99;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(18, 22, 43, .16);
+    padding: 18px;
+    flex-direction: column;
+    gap: 4px
+}
+
+#mobileMenu.open {
+    display: flex
+}
+
+#mobileMenu a {
+    padding: 13px 16px;
+    border-radius: 14px;
+    font-weight: 700;
+    color: #333a52
+}
+
+#mobileMenu a:hover {
+    background: #f5f5f5;
+    color: #000
+}
+
+/* ============ 1. HERO ============ */
+.hero {
+    position: relative;
+    padding: 170px 0 90px;
+    overflow: hidden
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, #000 30%, transparent 75%);
+    opacity: .6
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: -160px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 720px;
+    height: 420px;
+    background: radial-gradient(closest-side, rgba(250, 176, 3, .22), transparent 70%);
+    pointer-events: none
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #6a5110;
+    box-shadow: 0 6px 18px rgba(18, 22, 43, .06)
+}
+
+.badge i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
+    animation: pulse 2s infinite
+}
+
+@keyframes pulse {
+    50% {
+        box-shadow: 0 0 0 7px rgba(250, 176, 3, .08)
+    }
+}
+
+.hero h1 {
+    margin: 26px 0 22px;
+    font-size: clamp(30px, 5vw, 56px);
+    font-weight: 600;
+    line-height: 1.18;
+    max-width: 920px;
+    letter-spacing: -.01em
+}
+
+.hl {
+    background: linear-gradient(transparent 62%, rgba(250, 176, 3, .55) 62%);
+    padding: 0 4px
+}
+
+.hero-sub {
+    max-width: 680px;
+    color: var(--muted);
+    font-size: clamp(15px, 1.6vw, 17px);
+    font-weight: 600
+}
+
+.hero-cta {
+    display: flex;
+    gap: 14px;
+    margin: 36px 0 0;
+    flex-wrap: wrap;
+    justify-content: center
+}
+
+.hero-figure {
+    margin-top: 64px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 40px 90px rgba(11, 16, 38, .25);
+    position: relative
+}
+
+.hero-figure img {
+    width: 100%;
+    aspect-ratio: 16/7;
+    object-fit: cover
+}
+
+.hero-figure::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 70%, rgba(11, 16, 38, .35));
+    pointer-events: none
+}
+
+/* ============ MARQUEE ============ */
+.marquee {
+    margin-top: 34px;
+    background: #fff6df;
+    border-block: 1px solid var(--line);
+    padding: 15px 0;
+    overflow: hidden;
+    position: relative
+}
+
+.marquee-track {
+    display: flex;
+    gap: 44px;
+    width: max-content;
+    animation: marquee 32s linear infinite
+}
+
+.marquee:hover .marquee-track {
+    animation-play-state: paused
+}
+
+.marquee-track span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 14px;
+    color: #7a5c07;
+    white-space: nowrap
+}
+
+.marquee-track span::after {
+    content: '✦';
+    color: var(--primary);
+    margin-left: 34px
+}
+
+@keyframes marquee {
+    to {
+        transform: translateX(-50%)
+    }
+}
+
+/* ============ SECTION HEAD umumiy ============ */
+.sec-head {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 60px
+}
+
+.sec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    border: 2px solid var(--primary-soft);
+    color: var(--primary);
+    background-color: rgba(255, 246, 125, 0.2);
+    margin-bottom: 10px;
+}
+
+.sec-head h2 {
+    margin: 20px 0 16px;
+    font-size: clamp(26px, 3.6vw, 40px);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -.01em
+}
+
+.sec-head p {
+    color: var(--muted);
+    font-size: 15.5px;
+    font-weight: 600
+}
+
+/* ============ 3. SAYYORALAR (qorong'u bo'lim) ============ */
+.cosmos {
+    background: var(--navy);
+    color: #fff;
+    padding: 110px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cosmos .sec-head p {
+    color: #a9b0cc;
+}
+
+.starfield {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.starfield i {
+    position: absolute;
+    border-radius: 50%;
+    background: #fff;
+    opacity: .25;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    50% {
+        opacity: 1;
+        transform: scale(1.25);
+    }
+}
+
+.cosmos-glow {
+    position: absolute;
+    top: -220px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 500px;
+    background: radial-gradient(closest-side, rgba(250, 176, 3, .16), transparent 70%);
+    pointer-events: none;
+}
+
+/* ============ QUYOSH VA SAYYORALAR (BITTA O'Q) ============ */
+.solar-system-wrapper {
+    margin: 0 auto 30px;
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    z-index: 3;
+}
+
+.solar-system {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.solar-system:hover .main-orbit-rotator,
+.solar-system:hover .planet-on-orbit {
+    animation-play-state: paused;
+}
+
+/* ---- Markaziy Quyosh (GLOWSIZ) ---- */
+.sun-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    z-index: 2; /* Quyosh eng pastda */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.sun-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    /* Glow olib tashlandi */
+    animation: sun-pulse 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes sun-pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.06);
+    }
+}
+
+/* sun-glow butunlay olib tashlandi */
+
+/* ---- Bitta Yagona Halqa O'qi (KATTA ORBITA) ---- */
+.main-orbit-ring {
+    position: absolute;
+    width: 82%;
+    height: 82%;
+    top: 9%;
+    left: 9%;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(255, 255, 255, 0.22);
+    /* Glow olib tashlandi */
+    pointer-events: none;
+}
+
+.main-orbit-rotator {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    animation: main-orbit-rotate 40s linear infinite;
+}
+
+@keyframes main-orbit-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ---- 8 ta slotlar ---- */
+.planet-slot {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 100%;
+    transform-origin: center center;
+    pointer-events: none;
+}
+
+.slot-0 {
+    transform: rotate(0deg);
+}
+
+.slot-45 {
+    transform: rotate(45deg);
+}
+
+.slot-90 {
+    transform: rotate(90deg);
+}
+
+.slot-135 {
+    transform: rotate(135deg);
+}
+
+.slot-180 {
+    transform: rotate(180deg);
+}
+
+.slot-225 {
+    transform: rotate(225deg);
+}
+
+.slot-270 {
+    transform: rotate(270deg);
+}
+
+.slot-315 {
+    transform: rotate(315deg);
+}
+
+/* ---- Orbit ustidagi Sayyora (TIK TURADI, GLOWSIZ) ---- */
+.planet-on-orbit {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5; /* Sayyora Quyosh ustida (5 > 2) */
+    animation: planet-counter-rotate 40s linear infinite;
+}
+
+.planet-on-orbit:hover {
+    z-index: 20; /* Faol sayyora hamma narsadan ustun */
+}
+
+/* Har bir slot uchun boshlang'ich burchak offseti */
+.slot-0 .planet-on-orbit {
+    --slot-angle: 0deg;
+}
+
+.slot-45 .planet-on-orbit {
+    --slot-angle: -45deg;
+}
+
+.slot-90 .planet-on-orbit {
+    --slot-angle: -90deg;
+}
+
+.slot-135 .planet-on-orbit {
+    --slot-angle: -135deg;
+}
+
+.slot-180 .planet-on-orbit {
+    --slot-angle: -180deg;
+}
+
+.slot-225 .planet-on-orbit {
+    --slot-angle: -225deg;
+}
+
+.slot-270 .planet-on-orbit {
+    --slot-angle: -270deg;
+}
+
+.slot-315 .planet-on-orbit {
+    --slot-angle: -315deg;
+}
+
+@keyframes planet-counter-rotate {
+    from {
+        rotate: var(--slot-angle);
+    }
+
+    to {
+        rotate: calc(var(--slot-angle) - 360deg);
+    }
+}
+
+/* ---- Sayyora rasmi (O'RTACHA, GLOWSIZ) ---- */
+.planet-on-orbit img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* Glow olib tashlandi */
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.planet-on-orbit:hover img {
+    transform: scale(1.35);
+}
+
+/* ---- Chip yozuvi (ham tik turadi) ---- */
+.orbit-planet-chip {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffb300;
+    background: rgba(11, 16, 38, 0.94);
+    border: 1px solid rgba(255, 179, 0, 0.5);
+    padding: 4px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.planet-on-orbit:hover .orbit-planet-chip {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+}
+
+/* ---- Popover ---- */
+.orbit-planet-popover {
+    position: absolute;
+    bottom: calc(100% + 16px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.85);
+    background: rgba(15, 22, 50, 0.97);
+    border: 1px solid rgba(255, 179, 0, 0.6);
+    border-radius: 16px;
+    padding: 14px 16px;
+    width: 220px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(14px);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    z-index: 100;
+    text-align: left;
+}
+
+.planet-on-orbit:hover .orbit-planet-popover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+}
+
+.planet-on-orbit.active-hover img {
+    transform: scale(1.35);
+}
+
+.planet-on-orbit.active-hover .orbit-planet-chip {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+}
+
+.popover-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: rgba(250, 176, 3, 0.15);
+    padding: 2px 7px;
+    border-radius: 999px;
+    margin-bottom: 4px;
+}
+
+.popover-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin: 2px 0;
+    font-family: 'Unbounded', sans-serif;
+}
+
+.popover-skill {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+
+.popover-desc {
+    font-size: 11.5px;
+    line-height: 1.45;
+    color: #c4c9e2;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ============ PASTDAGI KARTOCHKALAR ============ */
+.planet-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.planet-card {
+    background: rgba(255, 255, 255, .045);
+    border: 1px solid rgba(255, 255, 255, .09);
+    border-radius: 24px;
+    padding: 28px 24px;
+    transition: transform .35s ease, border-color .35s, box-shadow .35s;
+    position: relative;
+}
+
+.planet-card:hover,
+.planet-card.card-highlight {
+    transform: translateY(-9px);
+    border-color: rgba(250, 176, 3, .85);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .5), 0 0 40px rgba(250, 176, 3, .35);
+}
+
+.planet-tag {
+    position: absolute;
+    top: 22px;
+    right: 20px;
+    background: rgba(250, 176, 3, .14);
+    color: var(--primary);
+    border-radius: 999px;
+    padding: 5px 11px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.planet-img {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* Glow olib tashlandi */
+}
+
+.planet-name {
+    margin-top: 18px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.planet-skill {
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    font-family: 'Manrope';
+}
+
+.planet-desc {
+    margin-top: 10px;
+    color: #b6bcd6;
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.65;
+}
+
+/* ============ 4. QANDAY ISHLAYDI — ZINA (staircase) ============ */
+.how {
+    padding: 110px 0 140px
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    align-items: start
+}
+
+.step {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 30px 26px;
+    position: relative;
+    transition: transform .3s, box-shadow .3s
+}
+
+.step:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 24px 50px rgba(18, 22, 43, .1)
+}
+
+/* Zina pog'onalarlari */
+.step:nth-child(1) {
+    margin-top: 0
+}
+
+.step:nth-child(2) {
+    margin-top: 70px
+}
+
+.step:nth-child(3) {
+    margin-top: 140px
+}
+
+.step:nth-child(4) {
+    margin-top: 210px
+}
+
+.step-num {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 17px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px
+}
+
+.step h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px
+}
+
+.step p {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600
+}
+
+/* ============ 5. AFZALLIKLAR — PIN BOARD ============ */
+.benefits {
+    padding: 20px 0 110px
+}
+
+.pin-board {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 30px;
+    padding: 70px 46px 60px;
+    background: #fdfdfd repeating-linear-gradient(180deg, transparent 0 34px, #ededed 34px 35px);
+    overflow: hidden
+}
+
+.pin-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1
+}
+
+.pin-lines path {
+    fill: none;
+    stroke: #c2c2c2;
+    stroke-width: 2;
+    stroke-dasharray: 5 9;
+    opacity: .75
+}
+
+.pin-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px 80px;
+    max-width: 920px;
+    margin: 0 auto;
+    align-items: start
+}
+
+.pin-card {
+    position: relative;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 18px 44px rgba(18, 22, 43, .13);
+    padding: 18px;
+    transform: rotate(var(--rot, 0deg));
+    transition: transform .3s, box-shadow .3s
+}
+
+.pin-card:hover {
+    transform: rotate(0deg) translateY(-6px);
+    box-shadow: 0 28px 60px rgba(18, 22, 43, .2)
+}
+
+.pin-card:nth-child(1) {
+    --rot: -3deg
+}
+
+.pin-card:nth-child(2) {
+    --rot: 2.5deg;
+    margin-top: 80px
+}
+
+.pin-card:nth-child(3) {
+    --rot: -2deg;
+    margin-top: 20px
+}
+
+.pin-card:nth-child(4) {
+    --rot: 3deg;
+    margin-top: 100px
+}
+
+/* ✏️ PIN RASM — src ni o'z 3D pin rasmingizga almashtiring */
+.pin-img {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .28));
+    pointer-events: none;
+    z-index: 3
+}
+
+.pin-head {
+    border-radius: 10px;
+    padding: 18px 16px 16px;
+    margin-bottom: 12px
+}
+
+.pin-card:nth-child(1) .pin-head {
+    background: #fdeadd
+}
+
+.pin-card:nth-child(2) .pin-head {
+    background: #e3e8fd
+}
+
+.pin-card:nth-child(3) .pin-head {
+    background: #f0e0fb
+}
+
+.pin-card:nth-child(4) .pin-head {
+    background: #fdeadd
+}
+
+.pin-num {
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: .08em;
+    margin-bottom: 8px
+}
+
+.pin-card:nth-child(1) .pin-num {
+    color: #e0703c
+}
+
+.pin-card:nth-child(2) .pin-num {
+    color: #5866e0
+}
+
+.pin-card:nth-child(3) .pin-num {
+    color: #9a4fd0
+}
+
+.pin-card:nth-child(4) .pin-num {
+    color: #e0703c
+}
+
+.pin-head h3 {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: #171727
+}
+
+.pin-card p {
+    color: #6b6f85;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.6
+}
+
+/* ============ 6. OTA-ONALAR PANELI + FORMA ============ */
+.parents {
+    padding: 110px 0;
+    background: #fff;
+    border-block: 1px solid var(--line)
+}
+
+.parents-grid {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 44px;
+    align-items: start
+}
+
+.parents-left h2 {
+    font-size: clamp(26px, 3.2vw, 38px);
+    font-weight: 600;
+    line-height: 1.25
+}
+
+/* Rasm uchun kulrang joy (placeholder) */
+.img-wrapper {
+    width: 100%;
+    margin-top: 20px;
+    /* max-width: 600px;  Aytaylik, rasmni juda kattalashib ketmasligi uchun */
+}
+
+/* Rasmning o'zi */
+.panel-img {
+    width: 100%;
+    /* Konteyner kengligiga to'liq moslashadi */
+    height: auto;
+    /* Balandlik avtomatik ravishda KESILMASDAN moslashadi */
+    display: block;
+    /* Pastki qismidagi keraksiz bo'shliqni (gap) yo'qotadi */
+    object-fit: contain;
+    /* Shifoyat: shakli hech qachon buzilmaydi */
+}
+
+.form-card {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 30px;
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 90px rgba(11, 16, 38, .35)
+}
+
+.form-card h3 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 2
+}
+
+.form-card>p {
+    color: #aab1cf;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 26px;
+    position: relative;
+    z-index: 2
+}
+
+.form-field {
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2
+}
+
+.form-field label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #c6cbe0;
+    margin-bottom: 7px
+}
+
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, .07);
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 14px;
+    padding: 14px 16px;
+    color: #fff;
+    font-family: 'Manrope';
+    font-size: 14.5px;
+    font-weight: 600;
+    outline: none;
+    transition: border-color .2s, background .2s;
+    appearance: none
+}
+
+.form-field textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.form-field input::placeholder {
+    color: #7d84a6
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+    border-color: var(--primary);
+    background: rgba(250, 176, 3, .07)
+}
+
+.form-card .btn {
+    width: 100%;
+    margin-top: 6px;
+    position: relative;
+    z-index: 2
+}
+
+.form-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 16px;
+    font-size: 12.5px;
+    color: #8f96b8;
+    font-weight: 600;
+    position: relative;
+    z-index: 2
+}
+
+/* ============ 7. SERTIFIKAT ============ */
+.certificate {
+    padding: 110px 0
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center
+}
+
+.cert-left h2 {
+    font-size: clamp(26px, 3.2vw, 38px);
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 18px
+}
+
+.cert-left p {
+    color: var(--muted);
+    font-size: 15.5px;
+    font-weight: 600
+}
+
+.cert-frame {
+    position: relative;
+    border-radius: 26px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 40px 90px rgba(18, 22, 43, .16);
+    transition: transform .4s ease;
+    background: #fdf8ec
+}
+
+.cert-frame:hover {
+    transform: rotate(0deg) scale(1.02)
+}
+
+.cert-frame>img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover
+}
+
+.cert-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15% 12% 22%;
+    gap: 8px
+}
+
+.cert-overlay small {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: #a17400
+}
+
+.cert-overlay strong {
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: clamp(18px, 2.4vw, 27px);
+    color: #3b3325;
+    line-height: 1.3
+}
+
+.cert-overlay span {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #8a7a55
+}
+
+/* ============ 8. YAKUNIY CTA ============ */
+.final-cta {
+    background: var(--navy);
+    color: #fff;
+    padding: 110px 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center
+}
+
+.final-cta h2 {
+    font-size: clamp(26px, 3.8vw, 44px);
+    font-weight: 600;
+    line-height: 1.25;
+    max-width: 820px;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 2
+}
+
+.final-cta p {
+    color: #a9b0cc;
+    font-size: 16px;
+    font-weight: 600;
+    max-width: 640px;
+    margin: 0 auto 40px;
+    position: relative;
+    z-index: 2
+}
+
+.final-cta .hero-cta {
+    position: relative;
+    z-index: 2;
+    margin-top: 0
+}
+
+.store-btn {
+    display: inline-block;
+    transition: transform .25s ease;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+.store-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: none !important;
+}
+
+.store-btn img {
+    height: 56px;
+    width: auto;
+    display: block;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+.cta-planet {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 30%, #ffd35c, var(--primary) 55%, #8a5f00 100%);
+    top: -190px;
+    right: -140px;
+    opacity: .35;
+    filter: blur(2px)
+}
+
+.cta-planet2 {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #5c72ff, #22307e 70%);
+    bottom: -120px;
+    left: -90px;
+    opacity: .4;
+    filter: blur(2px)
+}
+
+/* ============ FOOTER ============ */
+footer {
+    background: #070b1d;
+    color: #9aa1c0;
+    padding: 44px 0
+}
+
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-family: 'Unbounded';
+    font-weight: 700;
+    font-size: 15px
+}
+
+.footer-inner p {
+    font-size: 13.5px;
+    font-weight: 600
+}
+
+.socials {
+    display: flex;
+    gap: 10px
+}
+
+.socials a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, .14);
+    display: grid;
+    place-items: center;
+    transition: .25s
+}
+
+.socials a:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #1a1200;
+    transform: translateY(-3px)
+}
+
+/* ============ TOAST ============ */
+#toast {
+    position: fixed;
+    bottom: 26px;
+    left: 50%;
+    transform: translate(-50%, 80px);
+    background: var(--navy);
+    color: #fff;
+    border: 1px solid rgba(250, 176, 3, .5);
+    border-radius: 999px;
+    padding: 14px 26px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
+    transition: transform .45s cubic-bezier(.22, 1, .36, 1);
+    z-index: 200;
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+
+#toast.show {
+    transform: translate(-50%, 0)
+}
+
+/* ============ REVEAL ============ */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease
+}
+
+.reveal.in {
+    opacity: 1;
+    transform: none
+}
+
+.d1 {
+    transition-delay: .08s
+}
+
+.d2 {
+    transition-delay: .16s
+}
+
+.d3 {
+    transition-delay: .24s
+}
+
+.d4 {
+    transition-delay: .32s
+}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:1020px) {
+    .planet-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .steps {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    .step:nth-child(2) {
+        margin-top: 60px
+    }
+
+    .step:nth-child(3) {
+        margin-top: 0
+    }
+
+    .step:nth-child(4) {
+        margin-top: 60px
+    }
+
+    .parents-grid,
+    .cert-grid {
+        grid-template-columns: 1fr
+    }
+
+    .cert-frame {
+        max-width: 520px;
+        margin: 0 auto
+    }
+}
+
+@media(max-width:860px) {
+    .nav-links {
+        display: none
+    }
+
+    #menuBtn {
+        display: flex
+    }
+
+    .pin-grid {
+        grid-template-columns: 1fr;
+        gap: 44px
+    }
+
+    .pin-card:nth-child(even) {
+        margin-top: 0
+    }
+
+    .pin-card:nth-child(3) {
+        margin-top: 0
+    }
+
+    .pin-board {
+        padding: 56px 26px 44px
+    }
+}
+
+@media(max-width:600px) {
+
+    .planet-grid,
+    .steps {
+        grid-template-columns: 1fr
+    }
+
+    .step:nth-child(n) {
+        margin-top: 0
+    }
+
+    .hero {
+        padding-top: 140px
+    }
+
+    .hero-figure img {
+        aspect-ratio: 4/3
+    }
+
+    .form-card {
+        padding: 30px 24px
+    }
+
+    .nav-cta .btn {
+        padding: 10px 16px;
+        font-size: 13px
+    }
+}

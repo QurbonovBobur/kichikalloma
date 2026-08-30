@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kichik Alloma — Kosmik ta'lim ekotizimi</title>
+    <meta name="description"
+        content="Farzandingizning ekran vaqtini uning kelajagi uchun sarmoyaga aylantiring. 7–11 yosh bolalar uchun sun'iy intellektga asoslangan kosmik ta'lim ekotizimi.">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fab003'/%3E%3Cpath d='M32 12l5.8 12.6 13.2 1.8-9.6 9 2.4 13.2L32 42.2l-11.8 6.4 2.4-13.2-9.6-9 13.2-1.8z' fill='%23101426'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/400.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/500.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/600.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/700.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/800.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded/400.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded/500.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded/600.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded/700.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR (faqat o'zbek tilida) ================= -->
+    <nav id="navbar">
+        <div class="nav-pill" id="navPill">
+            <a href="#bosh" class="logo">
+                <img class="logo-mark" src="logo.png">
+                Kichik Alloma
+            </a>
+            <div class="nav-links">
+                <a href="#sayyoralar">Sayyoralar</a>
+                <a href="#qanday">Qanday ishlaydi</a>
+                <a href="#afzalliklar">Afzalliklar</a>
+                <a href="#panel">Ota-onalar paneli</a>
+            </div>
+            <div class="nav-cta">
+                <a href="#panel" class="btn btn-primary">Sayohatni boshlash</a>
+                <button id="menuBtn" aria-label="Menyu"><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+    <div id="mobileMenu">
+        <a href="#sayyoralar">Sayyoralar</a>
+        <a href="#qanday">Qanday ishlaydi</a>
+        <a href="#afzalliklar">Afzalliklar</a>
+        <a href="#panel">Ota-onalar paneli</a>
+        <a href="#sertifikat">Sertifikat</a>
+    </div>
+
+    <!-- ================= 1. ASOSIY EKRAN (HERO) ================= -->
+    <header class="hero" id="bosh">
+        <div class="container hero-inner">
+            <span class="badge reveal in"><i></i>Kosmik ta'lim ekotizimi</span>
+
+            <h1>Farzandingizning ekran vaqtini uning <span class="hl">kelajagi uchun sarmoyaga</span> aylantiring.</h1>
+
+            <p class="hero-sub">Kichik Alloma — sun'iy intellekt yordamida
+                bolalarni mustaqil fikrlashga, intizomga va o'z hissiyotlarini boshqarishga o'rgatuvchi yagona kosmik
+                ta'lim ekotizimi.</p>
+
+            <div class="hero-cta">
+                <a href="#panel" class="btn btn-primary">Sayohatni boshlash
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg></a>
+                <a href="#qanday" class="btn btn-ghost">Qanday ishlaydi?</a>
+            </div>
+
+            <figure class="hero-figure reveal in">
+                <img src="hero.jfif" alt="Kichik Alloma kosmik sayohati — bolalar astronavti va sayyoralar">
+            </figure>
+        </div>
+
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track" id="marqueeTrack">
+                <span>Kichik alloma</span>
+                <span>Kichik alloma</span>
+                <span>Kichik alloma</span>
+                <span>Kichik alloma</span>
+                <span>Kichik alloma</span>
+                <span>Kichik alloma</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= 3. KOINOT / 8 TA SAYYORA ================= -->
+    <section class="cosmos" id="sayyoralar">
+        <div class="starfield" data-stars="90"></div>
+        <div class="cosmos-glow"></div>
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-badge">Kosmik ekotizim</span>
+                <h2>Hayot uchun kerakli 8 ta eng muhim ko'nikma.</h2>
+                <p>Har bir sayyora ularning yashirin salohiyatini ochishga yordam beradi</p>
+            </div>
+
+            <!-- Quyosh va bitta o'qda 8 sayyora aylanishi animatsiyasi -->
+            <div class="solar-system-wrapper reveal">
+                <div class="solar-system">
+                    <!-- Markaziy Quyosh -->
+                    <div class="sun-center" title="Quyosh — Barcha bilimlarning markazi">
+                        <img src="img/sun.png" alt="Quyosh" class="sun-img">
+                        <div class="sun-glow"></div>
+                    </div>
+
+                    <!-- Bitta Yagona Orbit O'qi -->
+                    <div class="main-orbit-ring">
+                        <div class="main-orbit-rotator">
+                            <!-- 1. Merkuriy (0 deg) -->
+                            <div class="planet-slot slot-0">
+                                <div class="planet-on-orbit">
+                                    <img src="img/merkuriy.png" alt="Merkuriy">
+                                    <span class="orbit-planet-chip">Kasblar</span>
+                                    <div class="orbit-planet-popover">
+                                        <span class="popover-tag">Kashfiyot</span>
+                                        <h4 class="popover-title">Merkuriy</h4>
+                                        <div class="popover-skill">Kasblar</div>
+                                        <p class="popover-desc">Kelajak kasblarini kashf etish va maqsad qo'yish.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Venera (45 deg) -->
+                            <div class="planet-slot slot-45">
+                                <div class="planet-on-orbit">
+                                    <img src="img/venera.png" alt="Venera">
+                                    <span class="orbit-planet-chip">Virtual do'kon</span>
+                                    <div class="orbit-planet-popover">
+                                        <span class="popover-tag">Iqtisodiyot</span>
+                                        <h4 class="popover-title">Venera</h4>
+                                        <div class="popover-skill">Virtual do'kon</div>
+                                        <p class="popover-desc">O'z mehnati bilan topgan tangalarini to'g'ri sarflash.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. Yer (90 deg) -->
+                            <div class="planet-slot slot-90">
+                                <div class="planet-on-orbit">
+                                    <img src="img/earth.png" alt="Yer">
+                                    <span class="orbit-planet-chip">Kognitiv ta'lim</span>
+                                    <div class="orbit-planet-popover">
+                                        <span class="popover-tag">Kognitiv</span>
+                                        <h4 class="popover-title">Yer</h4>
+                                        <div class="popover-skill">Kognitiv ta'lim</div>
+                                        <p class="popover-desc">Sokratik AI-ustoz bilan mustaqil fikrlashni o'rganish.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. Mars (135 deg) -->
+                            <div class="planet-slot slot-135">
+                                <div class="planet-on-orbit">
+                                    <img src="img/mars.png" alt="Mars">
+                                    <span class="orbit-planet-chip">Jismoniy faollik</span>
+                                    <div class="orbit-planet-popover">
+                                        <span class="popover-tag">Harakat</span>
+                                        <h4 class="popover-title">Mars</h4>
+                                        <div class="popover-skill">Jismoniy faollik</div>
+                                        <p class="popover-desc">Ekrandan uzilib, real tana harakatlarini bajarish.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. Yupiter (180 deg) -->
+                            <div class="planet-slot slot-180">
+                                <div class="planet-on-orbit">
+                                    <img src="img/jupiter.png" alt="Yupiter">
+                                    <span class="orbit-planet-chip">O'z-o'zini boshqarish</span>
+                                    <div class="orbit-planet-popover">
+                                        <span class="popover-tag">Intizom</span>
+                                        <h4 class="popover-title">Yupiter</h4>
+                                        <div class="popover-skill">O'z-o'zini boshqarish</div>
+                                        <p class="popover-desc">Kunlik reja tuzish va vaqtni to'g'ri taqsimlash.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 6. Saturn (225 deg) -->
+                            <div class="planet-slot slot-225">
+                                <div class="planet-on-orbit">
+                                    <img src="img/saturn.png" alt="Saturn">
+                                    <span class="orbit-planet-chip">Matematika</span>
+                                    <div class="orbit-planet-popover">
+                                        <span class="popover-tag">Mantiq</span>
+                                        <h4 class="popover-title">Saturn</h4>
+                                        <div class="popover-skill">Matematika</div>
+                                        <p class="popover-desc">Mantiqiy fikrlashni kuchaytiruvchi bosqichli masalalar.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. Uran (270 deg) -->
+                            <div class="planet-slot slot-270">
+                                <div class="planet-on-orbit">
+                                    <img src="img/uran.png" alt="Uran">
+                                    <span class="orbit-planet-chip">Ingliz tili</span>
+                                    <div class="orbit-planet-popover">
+                                        <span class="popover-tag">Til</span>
+                                        <h4 class="popover-title">Uran</h4>
+                                        <div class="popover-skill">Ingliz tili</div>
+                                        <p class="popover-desc">Faol so'z boyligi va to'g'ri talaffuz amaliyoti.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 8. Neptun (315 deg) -->
+                            <div class="planet-slot slot-315">
+                                <div class="planet-on-orbit">
+                                    <img src="img/neptun.png" alt="Neptun">
+                                    <span class="orbit-planet-chip">Emotsional savodxonlik</span>
+                                    <div class="orbit-planet-popover">
+                                        <span class="popover-tag">Psixologiya</span>
+                                        <h4 class="popover-title">Neptun</h4>
+                                        <div class="popover-skill">Emotsional savodxonlik</div>
+                                        <p class="popover-desc">Kichkintoyning o'z hissiyotlarini tushunishi va
+                                            boshqarishi.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 4. QANDAY ISHLAYDI (ZINA shaklida) ================= -->
+    <section class="how" id="qanday">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-badge">Pedagogik yondashuv</span>
+                <h2>Majburlashsiz o'rganish. Qiziqishdan amaliy natijagacha 4 qadam.</h2>
+            </div>
+            <div class="steps">
+                <article class="step reveal">
+                    <div class="step-num">01</div>
+                    <h3>Maqsadli sayohat</h3>
+                    <p>Bola Quyosh tizimidagi o'zi kashf etmoqchi bo'lgan qobiliyat sayyorasini tanlaydi.</p>
+                </article>
+                <article class="step reveal d1">
+                    <div class="step-num">02</div>
+                    <h3>Fikrlab o'rganish</h3>
+                    <p>Sun'iy intellekt bolaning o'rniga vazifani bajarmaydi. U yo'naltiruvchi savollar orqali bolani
+                        to'g'ri javob topishga undaydi.</p>
+                </article>
+                <article class="step reveal d2">
+                    <div class="step-num">03</div>
+                    <h3>Amaliy harakat</h3>
+                    <p>O'qish, mashq qilish yoki o'z hissiyotlarini yozish orqali missiya yakunlanadi.</p>
+                </article>
+                <article class="step reveal d3">
+                    <div class="step-num">04</div>
+                    <h3>Munosib mukofot</h3>
+                    <p>Har bir to'g'ri qadam uchun "Gold Coin" yig'iladi. Bu bolada o'z mehnati samarasini ko'rish
+                        hissini uyg'otadi.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 5. AFZALLIKLAR (PIN BOARD) ================= -->
+    <section class="benefits" id="afzalliklar">
+        <div class="container">
+            <div class="sec-head reveal">
+                <span class="sec-badge">Farqlar</span>
+                <h2>An'anaviy ta'limdan nimasi bilan farq qiladi?</h2>
+            </div>
+
+            <div class="pin-board reveal">
+                <!-- Dekorativ shtrix chiziqlar (kartalar orasida) -->
+                <svg class="pin-lines" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M255 130 C 420 150 560 170 745 225" />
+                    <path d="M745 320 C 590 360 420 350 262 405" />
+                    <path d="M262 500 C 430 545 570 535 738 590" />
+                </svg>
+
+                <div class="pin-grid">
+                    <article class="pin-card">
+                        <!-- ✏️ PIN RASM: src ni o'z 3D pin rasmingizga almashtiring -->
+                        <img class="pin-img" src="pin.png" alt="">
+                        <div class="pin-head">
+                            <div class="pin-num">01</div>
+                            <h3>Tayyor javoblar yo'q</h3>
+                        </div>
+                        <p>AI-ustoz muammoning yechimini aytmaydi, uni qanday yechishni o'rgatadi. Bola o'ylashga majbur
+                            bo'ladi.</p>
+                    </article>
+
+                    <article class="pin-card">
+                        <img class="pin-img" src="pin.png" alt="">
+                        <div class="pin-head">
+                            <div class="pin-num">02</div>
+                            <h3>Sog'lom chegaralar</h3>
+                        </div>
+                        <p>Bolangiz gadjetga qaram bo'lib qolmaydi. Kunlik 20-daqiqalik cheklov ularni rejalashtirishga
+                            va qadriga
+                            yetishga o'rgatadi.</p>
+                    </article>
+
+                    <article class="pin-card">
+                        <img class="pin-img" src="pin.png" alt="">
+                        <div class="pin-head">
+                            <div class="pin-num">03</div>
+                            <h3>Faqat dars emas, hayotiy ko'nikma</h3>
+                        </div>
+                        <p>Ilova nafaqat matematika, balki jismoniy faollik va psixologik barqarorlikni (Neptun) ham
+                            qamrab oladi.</p>
+                    </article>
+
+                    <article class="pin-card">
+                        <img class="pin-img" src="pin.png" alt="">
+                        <div class="pin-head">
+                            <div class="pin-num">04</div>
+                            <h3>O'yin orqali iqtisodiyot</h3>
+                        </div>
+                        <p>Virtual Venera do'koni orqali bola pul ishlash, yig'ish va sarflash tushunchalarini amalda
+                            o'rganadi.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 6. OTA-ONALAR PANELI VA ALOQA ================= -->
+    <section class="parents" id="panel">
+        <div class="container parents-grid">
+            <div class="parents-left reveal">
+                <span class="sec-badge">Ota-onalar paneli</span>
+                <h2>Sizning xotirjamligingiz va to'liq tahlil.</h2>
+                <div class="img-wrapper">
+                    <img src="parents_panel.png" alt="Ota-onalar paneli" class="panel-img">
+                </div>
+            </div>
+
+            <div class="form-card reveal d1">
+                <div class="starfield" data-stars="40"></div>
+                <h3>Loyihani birinchilardan bo'lib sinab ko'ring.</h3>
+                <p>Ro'yxatdan o'ting — kosmik sayohat boshlanishida birinchi bo'lib xabar beramiz.</p>
+                <form id="waitlistForm" novalidate>
+                    <div class="form-field">
+                        <label for="fname">Ism</label>
+                        <input id="fname" name="name" type="text" placeholder="Masalan: Dilnoza" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="fphone">Telefon raqam</label>
+                        <input id="fphone" name="phone" type="tel" placeholder="+998 __ ___ __ __" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="fmessage">Xabar</label>
+                        <textarea id="fmessage" name="message" placeholder="Xabar yozing..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Yuborish
+                    </button>
+                    <div class="form-note"><span>Ma'lumotlaringiz xavfsiz saqlanadi.</span></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 7. SERTIFIKAT ================= -->
+    <section class="certificate" id="sertifikat">
+        <div class="container cert-grid">
+            <div class="cert-left reveal">
+                <span class="sec-badge">E'tirof</span>
+                <h2>Har bir yutuq munosib e'tirof etiladi.</h2>
+                <p>8 ta olam missiyalarini muvaffaqiyatli yakunlagan mitti kashfiyotchilar o'zlarining birinchi "Kosmik
+                    Sertifikati"ni qo'lga kiritadilar. Bu ularning kelajakdagi katta zafarlari sari ishonchli qadamdir.
+                </p>
+            </div>
+            <div class="cert-frame reveal d1">
+                <img loading="lazy" src="certificate.jpg" alt="Kosmik sertifikat ramkasi">
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 8. YAKUNIY CHAQIRUV (CTA) ================= -->
+    <section class="final-cta" id="cta">
+        <div class="starfield" data-stars="80"></div>
+        <div class="cta-planet"></div>
+        <div class="cta-planet2"></div>
+        <div class="container">
+            <h2 class="reveal">Ta'lim tizimidagi yangilanish <span class="hl">farzandingizdan</span> boshlanadi.</h2>
+            <p class="reveal d1">Qimmatli vaqtni boy bermang. Minglab zamonaviy ota-onalar qatoriga qo'shiling va Kichik
+                Alloma bilan haqiqiy rivojlanishni bugun boshlang.</p>
+            <div class="hero-cta reveal d2">
+                <a href="#panel" class="store-btn">
+                    <img src="img/btn_appstore.png" alt="App Store">
+                </a>
+                <a href="#panel" class="store-btn">
+                    <img src="img/btn_googleplay.png" alt="Google Play">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="container footer-inner">
+            <div class="footer-logo">
+                <span class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2l2.6 5.7 6 .9-4.4 4.2 1.1 6.1L12 16l-5.3 2.9 1.1-6.1L3.4 8.6l6-.9L12 2z"
+                            fill="#1a1200" />
+                    </svg></span>
+                Kichik Alloma
+            </div>
+            <p>© <span id="year">2025</span> Kichik Alloma. Barcha huquqlar himoyalangan.</p>
+            <div class="socials">
+                <a href="#" aria-label="Telegram"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M21.9 4.6c.3-1.2-.8-2-1.9-1.6L2.7 9.7c-1.2.5-1.1 2.2.1 2.6l4.5 1.4 1.7 5.2c.4 1.1 1.8 1.4 2.6.6l2.4-2.3 4.6 3.4c1 .7 2.4.2 2.7-1l2.6-15zM8.5 13.2l8.4-5.1c.3-.2.6.2.4.4l-6.9 6.5-.3 3-1.6-4.8z" />
+                    </svg></a>
+                <a href="#" aria-label="Instagram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="5" />
+                        <circle cx="12" cy="12" r="4" />
+                        <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
+                    </svg></a>
+                <a href="#" aria-label="YouTube"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M23 8s-.2-1.7-.9-2.4c-.8-.9-1.8-.9-2.2-1C16.8 4.3 12 4.3 12 4.3s-4.8 0-7.9.3c-.4.1-1.4.1-2.2 1C1.2 6.3 1 8 1 8S.8 10 .8 12v1.9C.8 15.9 1 17.9 1 17.9s.2 1.7.9 2.4c.8.9 1.9.9 2.4 1 1.8.2 7.7.3 7.7.3s4.8 0 7.9-.4c.4-.1 1.4-.1 2.2-1 .7-.7.9-2.4.9-2.4s.2-2 .2-3.9V12c0-2-.2-4-.2-4zM9.7 15.5v-7l6.3 3.5-6.3 3.5z" />
+                    </svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" role="status"> <span id="toastMsg"></span></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
