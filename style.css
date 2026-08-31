@@ -58,6 +58,9 @@ section {
     padding: 0 24px
 }
 
+
+
+
 ::selection {
     background: var(--primary);
     color: #1a1200
@@ -357,6 +360,9 @@ section {
     flex-wrap: wrap;
     justify-content: center
 }
+
+
+
 
 .hero-figure {
     margin-top: 64px;
@@ -1540,11 +1546,11 @@ section {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        linear-gradient(var(--line) 3px, transparent 2px),
+        linear-gradient(90deg, var(--line) 3px, transparent 2px);
     background-size: 52px 52px;
-    mask-image: radial-gradient(ellipse 65% 75% at 72% 50%, #000 20%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse 65% 75% at 72% 50%, #000 20%, transparent 70%);
+    mask-image: radial-gradient(ellipse 65% 75% at 72% 50%, #000 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 65% 75% at 72% 50%, #000 40%, transparent 80%);
     opacity: .5;
     pointer-events: none;
     z-index: 0
@@ -1665,6 +1671,14 @@ section {
     position: relative;
     z-index: 2;
     margin-top: 0
+}
+
+.final-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center
 }
 
 .store-btn {
