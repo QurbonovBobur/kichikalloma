@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qanday Ishlaydi — Section</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/400.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/500.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/600.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/700.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/800.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded/400.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded/600.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded/700.css">
+
+    <style>
+        :root {
+            --primary: #ffb300;
+            --primary-600: #ffb700;
+            --primary-soft: rgba(255, 208, 0, 0.138);
+            --ink: #12162b;
+            --cream: #fffaf1;
+            --muted: #5d6478;
+            --line: #eee1c4;
+            --paper: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope', system-ui, sans-serif;
+            background: #ffffff;
+            color: var(--ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .container {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .empty-section {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f7f3eb;
+            border: 2px dashed var(--line);
+            margin: 40px 20px;
+            border-radius: 24px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .sec-head {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .sec-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            border: 2px solid var(--primary-soft);
+            color: var(--primary);
+            background-color: rgba(255, 246, 125, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .sec-head h2 {
+            margin: 20px 0 16px;
+            font-size: clamp(26px, 3.6vw, 40px);
+            font-weight: 600;
+            line-height: 1.25;
+            letter-spacing: -.01em;
+        }
+
+        /* PEDAGOGY SCROLL STICKY SECTION */
+        .section-sticky {
+            position: relative;
+            height: 600vh;
+            background: #ffffff;
+        }
+
+        .section-sticky .sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 80px;
+            gap: 80px;
+            overflow: hidden;
+        }
+
+        /* Desktop - Cardlar chap */
+        .cards-wrapper {
+            position: relative;
+            width: 420px;
+            height: 520px;
+            overflow: hidden;
+        }
+
+        .cards-wrapper::before,
+        .cards-wrapper::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 60px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .cards-wrapper::before {
+            top: 0;
+            background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
+        }
+
+        .cards-wrapper::after {
+            bottom: 0;
+            background: linear-gradient(to top, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
+        }
+
+        .cards-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            will-change: transform;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .card {
+            width: 420px;
+            padding: 24px 28px;
+            background: #fffaf1;
+            border-radius: 20px;
+            border: 2px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            flex-shrink: 0;
+        }
+
+        .card.active {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(250, 176, 3, 0.15);
+        }
+
+        .card-number {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--muted);
+            font-family: 'Unbounded', sans-serif;
+            transition: color 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .card.active .card-number {
+            color: #ffffff;
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(250, 176, 3, 0.3);
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--ink);
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .card-subtitle {
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .card.active .card-subtitle {
+            color: var(--ink);
+        }
+
+        /* O'ng tomon - Rasm (desktop) */
+        .image-wrapper {
+            width: 420px;
+            height: 520px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            background: #fffaf1;
+            border: 2px solid var(--line);
+            flex-shrink: 0;
+        }
+
+        .image-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-slide.active {
+            opacity: 1;
+        }
+
+        .image-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ============ MOBIL UCHUN YANGI CARD ============ */
+        .mobile-step-container {
+            display: none;
+        }
+
+        @media (max-width: 991px) {
+            .section-sticky {
+                height: 400vh;
+                /* 4 qadam × 100vh */
+            }
+
+            .section-sticky .sticky-container {
+                flex-direction: column;
+                padding: 0 20px;
+                gap: 0;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Desktop elementlarini mobil uchun yashiramiz */
+            .cards-wrapper,
+            .image-wrapper {
+                display: none;
+            }
+
+            /* MOBIL CARD */
+            .mobile-step-container {
+                display: block;
+                width: 100%;
+                max-width: 340px;
+                /* card chekkalari bilinib turadi */
+            }
+
+            .mobile-step-card {
+                background: #fffaf1;
+                border-radius: 24px;
+                border: 2px solid var(--line);
+                overflow: hidden;
+                transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            }
+
+            .mobile-step-card.active {
+                border-color: var(--primary);
+                background: #ffffff;
+                box-shadow: 0 10px 30px rgba(250, 176, 3, 0.15);
+            }
+
+            /* Rasm: 3:4 ratio, card ichida, to'liq ko'rinadi */
+            .mobile-step-image-wrap {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 3 / 4;
+                overflow: hidden;
+                background: #fffaf1;
+            }
+
+            .mobile-step-image-wrap .mob-slide {
+                position: absolute;
+                inset: 0;
+                opacity: 0;
+                transition: opacity 0.55s ease;
+            }
+
+            .mobile-step-image-wrap .mob-slide.active {
+                opacity: 1;
+            }
+
+            .mobile-step-image-wrap .mob-slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            /* Matn qismi */
+            .mobile-step-content {
+                padding: 20px 22px 24px;
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+            }
+
+            .mobile-step-number {
+                width: 44px;
+                height: 44px;
+                min-width: 44px;
+                border-radius: 50%;
+                background: #fff;
+                border: 1px solid var(--line);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: 'Unbounded', sans-serif;
+                font-weight: 800;
+                font-size: 1.05rem;
+                color: var(--muted);
+                transition: all 0.4s ease;
+            }
+
+            .mobile-step-card.active .mobile-step-number {
+                background: var(--primary);
+                color: #fff;
+                border-color: var(--primary);
+                box-shadow: 0 4px 10px rgba(250, 176, 3, 0.3);
+            }
+
+            .mobile-step-text {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                flex: 1;
+            }
+
+            .mobile-step-title {
+                font-family: 'Unbounded', sans-serif;
+                font-size: 1.05rem;
+                font-weight: 700;
+                color: var(--ink);
+                line-height: 1.3;
+            }
+
+            .mobile-step-subtitle {
+                font-size: 0.88rem;
+                color: var(--muted);
+                line-height: 1.55;
+                font-weight: 500;
+            }
+
+            .mobile-step-card.active .mobile-step-subtitle {
+                color: var(--ink);
+            }
+
+            /* Progress indikator (ixtiyoriy, mobil uchun qo'shimcha) */
+            .mobile-progress {
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .mobile-progress-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--line);
+                transition: all 0.3s ease;
+            }
+
+            .mobile-progress-dot.active {
+                background: var(--primary);
+                width: 24px;
+                border-radius: 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="empty-section">
+        <h2>Yuqoridagi bo'sh bo'lim (Section Above)</h2>
+    </section>
+
+    <div class="container" style="padding-top: 100px; margin-bottom: -40px; position: relative; z-index: 10;">
+        <div class="sec-head">
+            <span class="sec-badge">Pedagogik yondashuv</span>
+            <h2>Qiziqishdan amaliy natijagacha 4 qadam.</h2>
+        </div>
+    </div>
+
+    <section class="section-sticky" id="qanday">
+        <div class="sticky-container">
+            <!-- Chap: Cardlar (desktop uchun) -->
+            <div class="cards-wrapper">
+                <div class="cards-inner" id="cardsInner">
+                    <div class="card" data-index="0">
+                        <div class="card-number">01</div>
+                        <div class="card-content">
+                            <div class="card-title">Maqsadli sayohat</div>
+                            <div class="card-subtitle">Bola Quyosh tizimidagi o'zi kashf etmoqchi bo'lgan qobiliyat
+                                sayyorasini tanlaydi.</div>
+                        </div>
+                    </div>
+                    <div class="card" data-index="1">
+                        <div class="card-number">02</div>
+                        <div class="card-content">
+                            <div class="card-title">Fikrlab o'rganish</div>
+                            <div class="card-subtitle">Sun'iy intellekt bolaning o'rniga vazifani bajarmaydi. U
+                                yo'naltiruvchi savollar orqali bolani to'g'ri javob topishga undaydi.</div>
+                        </div>
+                    </div>
+                    <div class="card" data-index="2">
+                        <div class="card-number">03</div>
+                        <div class="card-content">
+                            <div class="card-title">Amaliy harakat</div>
+                            <div class="card-subtitle">O'qish, mashq qilish yoki o'z hissiyotlarini yozish orqali
+                                missiya yakunlanadi.</div>
+                        </div>
+                    </div>
+                    <div class="card" data-index="3">
+                        <div class="card-number">04</div>
+                        <div class="card-content">
+                            <div class="card-title">Munosib mukofot</div>
+                            <div class="card-subtitle">Har bir to'g'ri qadam uchun "Gold Coin" yig'iladi. Bu bolada o'z
+                                mehnati samarasini ko'rish hissini uyg'otadi.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- O'ng: Rasmlar (desktop uchun) -->
+            <div class="image-wrapper" id="pedagogyImageWrapper">
+                <div class="image-slide active">
+                    <img src="img/how1.jpg" alt="Maqsadli sayohat">
+                </div>
+                <div class="image-slide">
+                    <img src="img/how2.jpg" alt="Fikrlab o'rganish">
+                </div>
+                <div class="image-slide">
+                    <img src="img/how3.jpg" alt="Amaliy harakat">
+                </div>
+                <div class="image-slide">
+                    <img src="img/how4.jpg" alt="Munosib mukofot">
+                </div>
+            </div>
+
+            <!-- MOBIL UCHUN YANGI CONTAINER (JS orqali to'ldiriladi) -->
+            <div class="mobile-step-container" id="mobileStepContainer"></div>
+        </div>
+    </section>
+
+    <section class="empty-section">
+        <h2>Pastdagi bo'sh bo'lim (Section Below)</h2>
+    </section>
+
+    <script>
+        (function () {
+            /* ==================== DESKTOP ANIMATSIYA (o'zgarishsiz) ==================== */
+            function initDesktopAnimation() {
+                var stickySection = document.querySelector('#qanday.section-sticky');
+                var cardsInner = document.getElementById('cardsInner');
+                if (!stickySection || !cardsInner) return;
+
+                var cards = Array.prototype.slice.call(cardsInner.querySelectorAll('.card'));
+                var slides = Array.prototype.slice.call(document.getElementById('pedagogyImageWrapper').querySelectorAll('.image-slide'));
+                var totalCards = cards.length;
+                if (totalCards === 0) return;
+
+                function getMetrics() {
+                    var wrapper = cardsInner.parentElement;
+                    var wrapperH = wrapper ? wrapper.offsetHeight : 520;
+                    var firstCard = cards[0];
+                    var cardH = firstCard ? firstCard.offsetHeight : 120;
+                    var computedGap = parseInt(window.getComputedStyle(cardsInner).gap) || 20;
+                    return { wrapperH: wrapperH, cardH: cardH, gap: computedGap };
+                }
+
+                var m = getMetrics();
+                var WRAPPER_HEIGHT = m.wrapperH;
+                var CARD_HEIGHT = m.cardH;
+                var GAP = m.gap;
+                var INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
+                var currentTranslate = INITIAL_OFFSET;
+                var targetTranslate = INITIAL_OFFSET;
+                var isAnimating = false;
+
+                function lerp(s, e, f) { return s + (e - s) * f; }
+
+                var segmentBoundaries = [0, 0.22, 0.48, 0.74, 1.0];
+
+                function updateOnScroll() {
+                    m = getMetrics();
+                    WRAPPER_HEIGHT = m.wrapperH;
+                    CARD_HEIGHT = m.cardH;
+                    GAP = m.gap;
+                    INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
+
+                    var rect = stickySection.getBoundingClientRect();
+                    var sectionH = stickySection.offsetHeight;
+                    var viewportH = window.innerHeight;
+                    var scrolled = -rect.top;
+                    var scrollable = sectionH - viewportH;
+                    var progress = Math.max(0, Math.min(1, scrolled / scrollable));
+
+                    var activeIndex = totalCards - 1;
+                    for (var si = 0; si < totalCards; si++) {
+                        if (progress < segmentBoundaries[si + 1]) { activeIndex = si; break; }
+                    }
+
+                    var centerPos = WRAPPER_HEIGHT / 2 - CARD_HEIGHT / 2;
+                    var cardPos = activeIndex * (CARD_HEIGHT + GAP);
+                    targetTranslate = -(cardPos - centerPos);
+                    if (progress < 0.03) targetTranslate = INITIAL_OFFSET;
+
+                    if (Math.abs(currentTranslate - targetTranslate) > 0.5) {
+                        currentTranslate = lerp(currentTranslate, targetTranslate, 0.12);
+                        isAnimating = true;
+                    } else {
+                        currentTranslate = targetTranslate;
+                        isAnimating = false;
+                    }
+                    cardsInner.style.transform = 'translateY(' + currentTranslate + 'px)';
+
+                    cards.forEach(function (c, i) { c.classList.toggle('active', i === activeIndex); });
+                    slides.forEach(function (s, i) { s.classList.toggle('active', i === activeIndex); });
+                }
+
+                function animate() {
+                    if (isAnimating) updateOnScroll();
+                    requestAnimationFrame(animate);
+                }
+
+                window.addEventListener('scroll', updateOnScroll, { passive: true });
+                window.addEventListener('resize', function () {
+                    m = getMetrics();
+                    WRAPPER_HEIGHT = m.wrapperH;
+                    CARD_HEIGHT = m.cardH;
+                    GAP = m.gap;
+                    INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
+                    updateOnScroll();
+                });
+                requestAnimationFrame(function () {
+                    m = getMetrics();
+                    WRAPPER_HEIGHT = m.wrapperH;
+                    CARD_HEIGHT = m.cardH;
+                    GAP = m.gap;
+                    INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
+                    currentTranslate = INITIAL_OFFSET;
+                    targetTranslate = INITIAL_OFFSET;
+                    updateOnScroll();
+                });
+                animate();
+            }
+
+            /* ==================== MOBIL ANIMATSIYA ==================== */
+            var STEPS = [
+                { number: "01", title: "Maqsadli sayohat", subtitle: "Bola Quyosh tizimidagi o'zi kashf etmoqchi bo'lgan qobiliyat sayyorasini tanlaydi.", image: "img/how1.jpg", alt: "Maqsadli sayohat" },
+                { number: "02", title: "Fikrlab o'rganish", subtitle: "Sun'iy intellekt bolaning o'rniga vazifani bajarmaydi. U yo'naltiruvchi savollar orqali bolani to'g'ri javob topishga undaydi.", image: "img/how2.jpg", alt: "Fikrlab o'rganish" },
+                { number: "03", title: "Amaliy harakat", subtitle: "O'qish, mashq qilish yoki o'z hissiyotlarini yozish orqali missiya yakunlanadi.", image: "img/how3.jpg", alt: "Amaliy harakat" },
+                { number: "04", title: "Munosib mukofot", subtitle: "Har bir to'g'ri qadam uchun 'Gold Coin' yig'iladi. Bu bolada o'z mehnati samarasini ko'rish hissini uyg'otadi.", image: "img/how4.jpg", alt: "Munosib mukofot" }
+            ];
+
+            var mobileInitialized = false;
+            var mobileCurrentStep = -1;
+            var mobileContainer, mobileCard, mobileNumber, mobileTitle, mobileSubtitle, mobileSlides, mobileDots;
+
+            function buildMobileLayout() {
+                mobileContainer = document.getElementById('mobileStepContainer');
+                if (!mobileContainer || mobileInitialized) return;
+                mobileInitialized = true;
+
+                // innerHTML bilan strukturani yaratamiz
+                mobileContainer.innerHTML = `
+                <div class="mobile-step-card active" id="mobileStepCard">
+                    <div class="mobile-step-image-wrap" id="mobileImageWrap">
+                        ${STEPS.map(function (s, i) {
+                    return `<div class="mob-slide ${i === 0 ? 'active' : ''}">
+                                <img src="${s.image}" alt="${s.alt}">
+                            </div>`;
+                }).join('')}
+                    </div>
+                    <div class="mobile-step-content">
+                        <div class="mobile-step-number" id="mobileStepNumber">${STEPS[0].number}</div>
+                        <div class="mobile-step-text">
+                            <div class="mobile-step-title" id="mobileStepTitle">${STEPS[0].title}</div>
+                            <div class="mobile-step-subtitle" id="mobileStepSubtitle">${STEPS[0].subtitle}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mobile-progress" id="mobileProgress">
+                    ${STEPS.map(function (_, i) {
+                    return `<div class="mobile-progress-dot ${i === 0 ? 'active' : ''}" data-idx="${i}"></div>`;
+                }).join('')}
+                </div>
+            `;
+
+                mobileCard = document.getElementById('mobileStepCard');
+                mobileNumber = document.getElementById('mobileStepNumber');
+                mobileTitle = document.getElementById('mobileStepTitle');
+                mobileSubtitle = document.getElementById('mobileStepSubtitle');
+                mobileSlides = mobileContainer.querySelectorAll('.mob-slide');
+                mobileDots = mobileContainer.querySelectorAll('.mobile-progress-dot');
+            }
+
+            function updateMobileStep() {
+                if (window.innerWidth > 991) return;
+                if (!mobileInitialized) buildMobileLayout();
+
+                var section = document.querySelector('#qanday.section-sticky');
+                if (!section || !mobileCard) return;
+
+                var rect = section.getBoundingClientRect();
+                var sectionH = section.offsetHeight;
+                var viewportH = window.innerHeight;
+                var scrolled = -rect.top;
+                var scrollable = sectionH - viewportH;
+                if (scrollable <= 0) return;
+
+                var progress = Math.max(0, Math.min(1, scrolled / scrollable));
+                // 4 ta segmentga bo'lamiz (har biri 0.25)
+                var stepIndex = Math.min(STEPS.length - 1, Math.floor(progress * STEPS.length));
+
+                if (stepIndex === mobileCurrentStep) return;
+                mobileCurrentStep = stepIndex;
+
+                var step = STEPS[stepIndex];
+
+                // Matnlarni innerHTML bilan yangilaymiz
+                mobileNumber.textContent = step.number;
+                mobileTitle.textContent = step.title;
+                mobileSubtitle.textContent = step.subtitle;
+
+                // Rasmlar cross-fade
+                mobileSlides.forEach(function (sl, i) {
+                    sl.classList.toggle('active', i === stepIndex);
+                });
+
+                // Progress dots
+                if (mobileDots) {
+                    mobileDots.forEach(function (d, i) {
+                        d.classList.toggle('active', i === stepIndex);
+                    });
+                }
+
+                // Card har doim active ko'rinadi (mobil variantda)
+                mobileCard.classList.add('active');
+            }
+
+            function onScroll() {
+                if (window.innerWidth < 992) {
+                    updateMobileStep();
+                }
+            }
+
+            function onResize() {
+                if (window.innerWidth < 992) {
+                    if (!mobileInitialized) buildMobileLayout();
+                    mobileCurrentStep = -1; // majburiy qayta hisoblash
+                    updateMobileStep();
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onResize);
+            window.addEventListener('orientationchange', function () {
+                setTimeout(onResize, 150);
+            });
+
+            // Ishga tushirish
+            if (window.innerWidth < 992) {
+                buildMobileLayout();
+                updateMobileStep();
+            } else {
+                initDesktopAnimation();
+            }
+
+            // Resize bo'lganda desktop ni ham qayta ishga tushirish
+            var lastMode = window.innerWidth < 992 ? 'mobile' : 'desktop';
+            window.addEventListener('resize', function () {
+                var newMode = window.innerWidth < 992 ? 'mobile' : 'desktop';
+                if (newMode === 'desktop' && lastMode === 'mobile') {
+                    initDesktopAnimation();
+                }
+                lastMode = newMode;
+            });
+        })();
+    </script>
+</body>
+
+</html>

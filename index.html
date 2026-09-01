@@ -29,8 +29,7 @@
         content="Farzandingizning ekran vaqtini uning kelajagi uchun sarmoyaga aylantiring.">
     <meta property="twitter:image" content="https://kichikalloma.uz/img/hero.jpg">
 
-    <link rel="icon"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fab003'/%3E%3Cpath d='M32 12l5.8 12.6 13.2 1.8-9.6 9 2.4 13.2L32 42.2l-11.8 6.4 2.4-13.2-9.6-9 13.2-1.8z' fill='%23101426'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/400.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/500.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope/600.css">
@@ -50,22 +49,81 @@
     <nav id="navbar">
         <div class="nav-pill" id="navPill">
             <a href="#bosh" class="logo">
-                <img class="logo-mark" src="img/logo.png">
-                Kichik Alloma
+                <img class="logo-mark" src="img/logo.png" alt="Logo">
+                <span class="logo-text">Kichik Alloma</span>
             </a>
+
             <div class="nav-links">
                 <a href="#sayyoralar">Sayyoralar</a>
                 <a href="#qanday">Qanday ishlaydi</a>
                 <a href="#afzalliklar">Afzalliklar</a>
                 <a href="#panel">Ota-onalar paneli</a>
             </div>
+
             <div class="nav-cta">
-                <a href="#panel" class="btn btn-primary">Sayohatni boshlash</a>
-                <button id="menuBtn" aria-label="Menyu"><span></span><span></span></button>
+                <div class="lang-dropdown nav-lang" id="langDropdown">
+                    <button class="lang-btn" aria-label="Tilni tanlash">
+                        <span class="currentLang">UZ</span>
+                        <svg class="arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="lang-menu">
+                        <div class="lang-option selected" data-lang="UZ">
+                            <span class="lang-code">UZ</span>
+                            <span>O'zbek</span>
+                        </div>
+                        <div class="lang-option" data-lang="RU">
+                            <span class="lang-code">RU</span>
+                            <span>Русский</span>
+                        </div>
+                        <div class="lang-option" data-lang="EN">
+                            <span class="lang-code">EN</span>
+                            <span>English</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#panel" class="btn btn-primary">
+                    <span class="btn-text"></span>
+                </a>
+
+                <button id="menuBtn" aria-label="Menyu">
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </nav>
+
     <div id="mobileMenu">
+        <div class="mobile-lang-wrapper">
+            <div class="lang-dropdown mobile-lang" id="mobileLangDropdown">
+                <button class="lang-btn" aria-label="Tilni tanlash">
+                    <span class="currentLang">UZ</span>
+                    <svg class="arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </button>
+                <div class="lang-menu">
+                    <div class="lang-option selected" data-lang="UZ">
+                        <span class="lang-code">UZ</span>
+                        <span>O'zbek</span>
+                    </div>
+                    <div class="lang-option" data-lang="RU">
+                        <span class="lang-code">RU</span>
+                        <span>Русский</span>
+                    </div>
+                    <div class="lang-option" data-lang="EN">
+                        <span class="lang-code">EN</span>
+                        <span>English</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <a href="#sayyoralar">Sayyoralar</a>
         <a href="#qanday">Qanday ishlaydi</a>
         <a href="#afzalliklar">Afzalliklar</a>
@@ -93,8 +151,22 @@
                 <a href="#qanday" class="btn btn-ghost">Qanday ishlaydi?</a>
             </div>
 
+            <!-- VIDEO PLAYER CONTAINERI -->
             <figure class="hero-figure reveal in">
-                <img src="img/hero.jpg" alt="Kichik Alloma kosmik sayohati — bolalar astronavti va sayyoralar">
+                <video id="heroVideo" class="hero-video" loop playsinline muted>
+                    <source src="video/hero_vid.mp4" type="video/mp4">
+                    Brauzeringiz video tegini qo'llab-quvvatlamaydi.
+                </video>
+                <button id="videoBtn" class="video-btn" aria-label="Play / Pause">
+                    <!-- Play ikonka -->
+                    <svg class="icon-play" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    <!-- Pause/Stop ikonka -->
+                    <svg class="icon-pause" viewBox="0 0 24 24">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                    </svg>
+                </button>
             </figure>
         </div>
 
@@ -130,118 +202,155 @@
                     <p>Har bir sayyora ularning yashirin salohiyatini ochishga yordam beradi</p>
                 </div>
 
-                <!-- Yangi sayyora kartalari -->
+                <!-- Sayyora kartalari -->
                 <div class="planet-cards-container reveal" id="planetCardsContainer">
                     <div class="planet-card-stack" id="planetCardStack">
+
                         <!-- 1. Merkuriy -->
                         <div class="planet-card-item" data-planet="merkuriy">
-                            <div class="planet-card-content">
+                            <div class="planet-card-back">
+                                <p class="planet-card-desc">Kelajak kasblarini kashf etish va maqsad qo'yish.</p>
+                            </div>
+                            <div class="planet-card-front">
                                 <div class="planet-card-img-wrap">
                                     <img src="img/merkuriy.png" alt="Merkuriy" class="planet-card-img">
                                 </div>
                                 <div class="planet-card-info">
                                     <h4 class="planet-card-title">Merkuriy</h4>
-                                    <div class="planet-card-skill">Kasblar</div>
-                                    <p class="planet-card-desc">Kelajak kasblarini kashf etish va maqsad qo'yish.</p>
+                                    <span class="planet-card-skill">Kasblar</span>
+                                    <p class="planet-card-desc-mobile">Kelajak kasblarini kashf etish va maqsad qo'yish.
+                                    </p>
                                 </div>
                             </div>
                         </div>
+
                         <!-- 2. Venera -->
                         <div class="planet-card-item" data-planet="venera">
-                            <div class="planet-card-content">
+                            <div class="planet-card-back">
+                                <p class="planet-card-desc">O'z mehnati bilan topgan tangalarini to'g'ri sarflash.</p>
+                            </div>
+                            <div class="planet-card-front">
                                 <div class="planet-card-img-wrap">
                                     <img src="img/venera.png" alt="Venera" class="planet-card-img">
                                 </div>
                                 <div class="planet-card-info">
                                     <h4 class="planet-card-title">Venera</h4>
-                                    <div class="planet-card-skill">Virtual do'kon</div>
-                                    <p class="planet-card-desc">O'z mehnati bilan topgan tangalarini to'g'ri sarflash.
-                                    </p>
+                                    <span class="planet-card-skill">Virtual do'kon</span>
+                                    <p class="planet-card-desc-mobile">O'z mehnati bilan topgan tangalarini to'g'ri
+                                        sarflash.</p>
                                 </div>
                             </div>
                         </div>
+
                         <!-- 3. Yer -->
                         <div class="planet-card-item" data-planet="yer">
-                            <div class="planet-card-content">
+                            <div class="planet-card-back">
+                                <p class="planet-card-desc">Sokratik AI-ustoz bilan mustaqil fikrlashni o'rganish.</p>
+                            </div>
+                            <div class="planet-card-front">
                                 <div class="planet-card-img-wrap">
                                     <img src="img/earth.png" alt="Yer" class="planet-card-img">
                                 </div>
                                 <div class="planet-card-info">
                                     <h4 class="planet-card-title">Yer</h4>
-                                    <div class="planet-card-skill">Kognitiv ta'lim</div>
-                                    <p class="planet-card-desc">Sokratik AI-ustoz bilan mustaqil fikrlashni o'rganish.
-                                    </p>
+                                    <span class="planet-card-skill">Kognitiv ta'lim</span>
+                                    <p class="planet-card-desc-mobile">Sokratik AI-ustoz bilan mustaqil fikrlashni
+                                        o'rganish.</p>
                                 </div>
                             </div>
                         </div>
+
                         <!-- 4. Mars -->
                         <div class="planet-card-item" data-planet="mars">
-                            <div class="planet-card-content">
+                            <div class="planet-card-back">
+                                <p class="planet-card-desc">Ekrandan uzilib, real tana harakatlarini bajarish.</p>
+                            </div>
+                            <div class="planet-card-front">
                                 <div class="planet-card-img-wrap">
                                     <img src="img/mars.png" alt="Mars" class="planet-card-img">
                                 </div>
                                 <div class="planet-card-info">
                                     <h4 class="planet-card-title">Mars</h4>
-                                    <div class="planet-card-skill">Jismoniy faollik</div>
-                                    <p class="planet-card-desc">Ekrandan uzilib, real tana harakatlarini bajarish.</p>
+                                    <span class="planet-card-skill">Jismoniy faollik</span>
+                                    <p class="planet-card-desc-mobile">Ekrandan uzilib, real tana harakatlarini
+                                        bajarish.</p>
                                 </div>
                             </div>
                         </div>
+
                         <!-- 5. Yupiter -->
                         <div class="planet-card-item" data-planet="yupiter">
-                            <div class="planet-card-content">
+                            <div class="planet-card-back">
+                                <p class="planet-card-desc">Kunlik reja tuzish va vaqtni to'g'ri taqsimlash.</p>
+                            </div>
+                            <div class="planet-card-front">
                                 <div class="planet-card-img-wrap">
                                     <img src="img/jupiter.png" alt="Yupiter" class="planet-card-img">
                                 </div>
                                 <div class="planet-card-info">
                                     <h4 class="planet-card-title">Yupiter</h4>
-                                    <div class="planet-card-skill">O'z-o'zini boshqarish</div>
-                                    <p class="planet-card-desc">Kunlik reja tuzish va vaqtni to'g'ri taqsimlash.</p>
+                                    <span class="planet-card-skill">O'z-o'zini boshqarish</span>
+                                    <p class="planet-card-desc-mobile">Kunlik reja tuzish va vaqtni to'g'ri taqsimlash.
+                                    </p>
                                 </div>
                             </div>
                         </div>
+
                         <!-- 6. Saturn -->
                         <div class="planet-card-item" data-planet="saturn">
-                            <div class="planet-card-content">
+                            <div class="planet-card-back">
+                                <p class="planet-card-desc">Mantiqiy fikrlashni kuchaytiruvchi bosqichli masalalar.</p>
+                            </div>
+                            <div class="planet-card-front">
                                 <div class="planet-card-img-wrap">
                                     <img src="img/saturn.png" alt="Saturn" class="planet-card-img">
                                 </div>
                                 <div class="planet-card-info">
                                     <h4 class="planet-card-title">Saturn</h4>
-                                    <div class="planet-card-skill">Matematika</div>
-                                    <p class="planet-card-desc">Mantiqiy fikrlashni kuchaytiruvchi bosqichli masalalar.
-                                    </p>
+                                    <span class="planet-card-skill">Matematika</span>
+                                    <p class="planet-card-desc-mobile">Mantiqiy fikrlashni kuchaytiruvchi bosqichli
+                                        masalalar.</p>
                                 </div>
                             </div>
                         </div>
+
                         <!-- 7. Uran -->
                         <div class="planet-card-item" data-planet="uran">
-                            <div class="planet-card-content">
+                            <div class="planet-card-back">
+                                <p class="planet-card-desc">Faol so'z boyligi va to'g'ri talaffuz amaliyoti.</p>
+                            </div>
+                            <div class="planet-card-front">
                                 <div class="planet-card-img-wrap">
                                     <img src="img/uran.png" alt="Uran" class="planet-card-img">
                                 </div>
                                 <div class="planet-card-info">
                                     <h4 class="planet-card-title">Uran</h4>
-                                    <div class="planet-card-skill">Ingliz tili</div>
-                                    <p class="planet-card-desc">Faol so'z boyligi va to'g'ri talaffuz amaliyoti.</p>
+                                    <span class="planet-card-skill">Ingliz tili</span>
+                                    <p class="planet-card-desc-mobile">Faol so'z boyligi va to'g'ri talaffuz amaliyoti.
+                                    </p>
                                 </div>
                             </div>
                         </div>
+
                         <!-- 8. Neptun -->
                         <div class="planet-card-item" data-planet="neptun">
-                            <div class="planet-card-content">
+                            <div class="planet-card-back">
+                                <p class="planet-card-desc">Kichkintoyning o'z hissiyotlarini tushunishi va boshqarishi.
+                                </p>
+                            </div>
+                            <div class="planet-card-front">
                                 <div class="planet-card-img-wrap">
                                     <img src="img/neptun.png" alt="Neptun" class="planet-card-img">
                                 </div>
                                 <div class="planet-card-info">
                                     <h4 class="planet-card-title">Neptun</h4>
-                                    <div class="planet-card-skill">Emotsional savodxonlik</div>
-                                    <p class="planet-card-desc">Kichkintoyning o'z hissiyotlarini tushunishi va
-                                        boshqarishi.
-                                    </p>
+                                    <span class="planet-card-skill">Emotsional savodxonlik</span>
+                                    <p class="planet-card-desc-mobile">Kichkintoyning o'z hissiyotlarini tushunishi va
+                                        boshqarishi.</p>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -258,7 +367,7 @@
 
     <section class="section-sticky" id="qanday">
         <div class="sticky-container">
-            <!-- Chap: Cardlar -->
+            <!-- Chap: Cardlar (desktop uchun) -->
             <div class="cards-wrapper">
                 <div class="cards-inner" id="cardsInner">
                     <div class="card" data-index="0">
@@ -296,7 +405,7 @@
                 </div>
             </div>
 
-            <!-- O'ng: Rasmlar (bo'sh qoldirildi, foydalanuvchi o'zi qo'shadi) -->
+            <!-- O'ng: Rasmlar (desktop uchun) -->
             <div class="image-wrapper" id="pedagogyImageWrapper">
                 <div class="image-slide active">
                     <img src="img/how1.jpg" alt="Maqsadli sayohat">
@@ -308,9 +417,12 @@
                     <img src="img/how3.jpg" alt="Amaliy harakat">
                 </div>
                 <div class="image-slide">
-                    <img src="img/how.jpg" alt="Munosib mukofot">
+                    <img src="img/how4.jpg" alt="Munosib mukofot">
                 </div>
             </div>
+
+            <!-- MOBIL UCHUN YANGI CONTAINER (JS orqali to'ldiriladi) -->
+            <div class="mobile-step-container" id="mobileStepContainer"></div>
         </div>
     </section>
 
@@ -397,8 +509,8 @@
 
             <div class="form-card reveal d1">
                 <div class="starfield" data-stars="40"></div>
-                <h3>Loyihani birinchilardan bo'lib sinab ko'ring.</h3>
-                <p>Ro'yxatdan o'ting — kosmik sayohat boshlanishida birinchi bo'lib xabar beramiz.</p>
+                <h3>Farzandingiz kelajagi uchun hoziroq boshlang.</h3>
+                <p>Ro'yxatdan o'ting — kosmik sayohatlarda biz bilan birga bo'ling.</p>
                 <form id="waitlistForm" novalidate>
                     <div class="form-field">
                         <label for="fname">Ism</label>

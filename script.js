@@ -5,22 +5,76 @@ var kaOne = function (sel, ctx) { return (ctx || document).querySelector(sel); }
 /* ============ Navbar scroll ============ */
 var kaNavPill = kaOne('#navPill');
 window.addEventListener('scroll', function () {
-    kaNavPill.classList.toggle('scrolled', window.scrollY > 10);
+    if (kaNavPill) {
+        kaNavPill.classList.toggle('scrolled', window.scrollY > 10);
+    }
 }, { passive: true });
 
 /* ============ Mobil menyu ============ */
 var kaMenuBtn = kaOne('#menuBtn');
 var kaMobileMenu = kaOne('#mobileMenu');
-kaMenuBtn.addEventListener('click', function () {
-    kaMobileMenu.classList.toggle('open');
-    kaMenuBtn.classList.toggle('open');
-});
-kaAll('#mobileMenu a').forEach(function (link) {
-    link.addEventListener('click', function () {
-        kaMobileMenu.classList.remove('open');
-        kaMenuBtn.classList.remove('open');
+
+if (kaMenuBtn && kaMobileMenu) {
+    kaMenuBtn.addEventListener('click', function () {
+        kaMobileMenu.classList.toggle('open');
+        kaMenuBtn.classList.toggle('open');
     });
-});
+
+    kaAll('#mobileMenu a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            kaMobileMenu.classList.remove('open');
+            kaMenuBtn.classList.remove('open');
+        });
+    });
+}
+
+/* ============ Lang Dropdown (Desktop & Mobil sinxron) ============ */
+function initDropdowns() {
+    var dropdowns = kaAll('.lang-dropdown');
+
+    dropdowns.forEach(function (dropdown) {
+        var btn = kaOne('.lang-btn', dropdown);
+
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            // Boshqa barcha ochiq dropdownlarni yopish
+            dropdowns.forEach(function (d) { if (d !== dropdown) d.classList.remove('open'); });
+            dropdown.classList.toggle('open');
+        });
+    });
+
+    // Variant tanlanganda har ikkala dropdownni sinxronlash
+    var allOptions = kaAll('.lang-option');
+    allOptions.forEach(function (option) {
+        option.addEventListener('click', function () {
+            var selectedLang = this.getAttribute('data-lang');
+
+            kaAll('.currentLang').forEach(function (el) {
+                el.textContent = selectedLang;
+            });
+
+            allOptions.forEach(function (opt) {
+                if (opt.getAttribute('data-lang') === selectedLang) {
+                    opt.classList.add('selected');
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+
+            dropdowns.forEach(function (d) { d.classList.remove('open'); });
+        });
+    });
+
+    document.addEventListener('click', function (e) {
+        dropdowns.forEach(function (d) {
+            if (!d.contains(e.target)) {
+                d.classList.remove('open');
+            }
+        });
+    });
+}
+
+initDropdowns();
 
 /* ============ Reveal on scroll ============ */
 var kaRevealIO = new IntersectionObserver(function (entries) {
@@ -61,29 +115,60 @@ if (kaTeamMarquee) {
     kaTeamMarquee.innerHTML += kaTeamMarquee.innerHTML;
 }
 
-/* ============ Hero rasm — scroll da scale animatsiyasi (80% → 100%) ============ */
-(function initHeroImgScale() {
+/* Hero Video Control & Scale Animatsiyasi */
+(function initHeroVideoPlayer() {
     var heroFig = kaOne('.hero-figure');
-    if (!heroFig) return;
+    var heroVideo = kaOne('#heroVideo');
+    var videoBtn = kaOne('#videoBtn');
+
+    if (!heroFig || !heroVideo || !videoBtn) return;
 
     heroFig.style.willChange = 'transform';
     heroFig.style.transformOrigin = 'center top';
 
-    function updateScale() {
+    var autoPlayTriggered = false;
+
+    function updateVideoScaleAndPlay() {
         var rect = heroFig.getBoundingClientRect();
         var vh = window.innerHeight;
-        /* rect.top: yuqori qirra viewport dan qancha pastda.
-           Rasm ekranga to'liq kirganda rect.top ~ 0.
-           progress: 0 (ko'rinmaydi) → 1 (viewport o'rtasida) */
         var rawProgress = 1 - (rect.top / vh);
-        /* Ertaroq 100%: progress 0.55 da to'liq scale */
         var progress = Math.max(0, Math.min(1, rawProgress / 0.45));
         var scale = 0.90 + progress * 0.10;
+
         heroFig.style.transform = 'scale(' + scale.toFixed(4) + ')';
+
+        /* Video 100% scale holatiga yetganda bir marta avtomatik ijro bo'ladi */
+        if (scale >= 0.999 && !autoPlayTriggered) {
+            autoPlayTriggered = true;
+            heroVideo.play().then(function () {
+                videoBtn.classList.add('playing');
+            }).catch(function (error) {
+                console.log("Autoplay brauzer tomonidan bloklandi:", error);
+            });
+        }
     }
 
-    window.addEventListener('scroll', updateScale, { passive: true });
-    updateScale();
+    /* Manual Play/Pause bosilganda */
+    videoBtn.addEventListener('click', function () {
+        if (heroVideo.paused) {
+            heroVideo.play();
+            videoBtn.classList.add('playing');
+        } else {
+            heroVideo.pause();
+            videoBtn.classList.remove('playing');
+        }
+    });
+
+    heroVideo.addEventListener('play', function () {
+        videoBtn.classList.add('playing');
+    });
+
+    heroVideo.addEventListener('pause', function () {
+        videoBtn.classList.remove('playing');
+    });
+
+    window.addEventListener('scroll', updateVideoScaleAndPlay, { passive: true });
+    updateVideoScaleAndPlay();
 })();
 
 /* ============ Forma ============ */
@@ -130,12 +215,11 @@ if (yearEl) {
 
     var COLS = 4;
     var ROWS = 2;
-    var CARD_W = 340;
-    var CARD_H = 220;
+    var CARD_W = 300;
+    var CARD_H = 170;
     var GAP_X = 24;
-    var GAP_Y = 30;
+    var GAP_Y = 12;
 
-    // Calculate final grid positions centered relative to stack center (0,0)
     function getFinalPositions() {
         var positions = [];
         var totalW = COLS * CARD_W + (COLS - 1) * GAP_X;
@@ -151,7 +235,6 @@ if (yearEl) {
     }
     var finals = getFinalPositions();
 
-    // Initials stacked in a pile (with offset shifts and rotation)
     var initials = cards.map(function (_, i) {
         var offset = i - 3.5;
         return {
@@ -164,7 +247,6 @@ if (yearEl) {
 
     function getProgress() {
         var rect = section.getBoundingClientRect();
-        // Since section height is 300vh, scroll height is 200vh
         var scrollHeight = section.offsetHeight - window.innerHeight;
         if (scrollHeight <= 0) return 0;
         var scrolled = -rect.top;
@@ -174,13 +256,12 @@ if (yearEl) {
     var ease = function (t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; };
 
     function render() {
-        // Only run transform animations on desktop screen sizes (width >= 992px)
         if (window.innerWidth < 992) {
-            // Reset mobile fallback transforms/opacities
             cards.forEach(function (card) {
                 card.style.transform = '';
                 card.style.opacity = '';
                 card.style.zIndex = '';
+                card.classList.remove('opened');
             });
             stack.style.transform = '';
             return;
@@ -188,6 +269,8 @@ if (yearEl) {
 
         var p = getProgress();
         var ep = ease(p);
+
+        var isFullyOpened = p >= 0.70;
 
         cards.forEach(function (card, i) {
             var ini = initials[i];
@@ -199,26 +282,29 @@ if (yearEl) {
             var r = ini.r * (1 - ep);
             var s = ini.s + (1 - ini.s) * ep;
 
-            // Opacity starts high to make all cards visible immediately
             var opacity = 0.95 + 0.05 * Math.min(1, p * 3);
 
             card.style.transform = 'translate(' + x + 'px, ' + y + 'px) rotate(' + r + 'deg) scale(' + s + ')';
             card.style.opacity = opacity;
             card.style.zIndex = Math.round(ep * 10) + 1;
+
+            if (isFullyOpened) {
+                card.classList.add('opened');
+            } else {
+                card.classList.remove('opened');
+            }
         });
 
-        // Resize & scale the entire stack to fit within viewport perfectly
         scaleStage();
     }
 
     function scaleStage() {
         if (window.innerWidth < 992) return;
 
-        var gridW = COLS * CARD_W + (COLS - 1) * GAP_X; // 1432
-        var gridH = ROWS * CARD_H + (ROWS - 1) * GAP_Y; // 840
+        var gridW = COLS * CARD_W + (COLS - 1) * GAP_X; // 1272
+        var gridH = ROWS * CARD_H + (ROWS - 1) * GAP_Y; // 364
 
         var parentW = stack.parentElement.clientWidth;
-        // Available viewport height minus approximate header size (160px)
         var parentH = window.innerHeight - 160;
 
         var scaleW = parentW / gridW;
@@ -230,156 +316,170 @@ if (yearEl) {
 
     window.addEventListener('scroll', render, { passive: true });
     window.addEventListener('resize', render);
-    // Initial call
     render();
 })();
 
-/* ============ Pedagogik Yondashuv - Scroll Sticky Animation ============ */
-(function initPedagogyStickyAnimation() {
+/* ============ Pedagogik Yondashuv — Desktop + Mobil Animatsiya ============ */
+(function () {
     var stickySection = kaOne('#qanday.section-sticky');
+    if (!stickySection) return;
+
+    /* --- DESKTOP ELEMENTLARI --- */
     var cardsInner = kaOne('#cardsInner');
-    if (!stickySection || !cardsInner) return;
-
-    var cards = kaAll('.card', cardsInner);
-    var slides = kaAll('.image-slide', kaOne('#pedagogyImageWrapper'));
+    var cards = cardsInner ? kaAll('.card', cardsInner) : [];
+    var imgWrapper = kaOne('#pedagogyImageWrapper');
+    var slides = imgWrapper ? kaAll('.image-slide', imgWrapper) : [];
     var totalCards = cards.length;
-    if (totalCards === 0) return;
 
-    // O'lchamlarni DOM dan dinamik o'qish
-    function getMetrics() {
+    /* --- MOBIL DATA & SOZLAMALARI --- */
+    var STEPS = [
+        { number: "01", title: "Maqsadli sayohat", subtitle: "Bola Quyosh tizimidagi o'zi kashf etmoqchi bo'lgan qobiliyat sayyorasini tanlaydi.", image: "img/how1.jpg", alt: "Maqsadli sayohat" },
+        { number: "02", title: "Fikrlab o'rganish", subtitle: "Sun'iy intellekt bolaning o'rniga vazifani bajarmaydi. U yo'naltiruvchi savollar orqali bolani to'g'ri javob topishga undaydi.", image: "img/how2.jpg", alt: "Fikrlab o'rganish" },
+        { number: "03", title: "Amaliy harakat", subtitle: "O'qish, mashq qilish yoki o'z hissiyotlarini yozish orqali missiya yakunlanadi.", image: "img/how3.jpg", alt: "Amaliy harakat" },
+        { number: "04", title: "Munosib mukofot", subtitle: "Har bir to'g'ri qadam uchun 'Gold Coin' yig'iladi. Bu bolada o'z mehnati samarasini ko'rish hissini uyg'otadi.", image: "img/how4.jpg", alt: "Munosib mukofot" }
+    ];
+
+    var mobileInitialized = false;
+    var mobileContainer, mobileCards, mobileDots;
+    var mobileCurrentStep = -1;
+
+    function buildMobileLayout() {
+        mobileContainer = document.getElementById('mobileStepContainer');
+        if (!mobileContainer || mobileInitialized) return;
+        mobileInitialized = true;
+
+        var html = '<div class="mobile-step-cards-wrapper" id="mobileCardsWrapper">';
+        STEPS.forEach(function (s, i) {
+            var initialClass = i === 0 ? 'active' : 'is-next';
+            html += '<div class="mobile-step-card ' + initialClass + '" data-idx="' + i + '">' +
+                '<div class="mobile-step-image-wrap">' +
+                '<img src="' + s.image + '" alt="' + s.alt + '">' +
+                '</div>' +
+                '<div class="mobile-step-content">' +
+                '<div class="mobile-step-number">' + s.number + '</div>' +
+                '<div class="mobile-step-text">' +
+                '<div class="mobile-step-title">' + s.title + '</div>' +
+                '<div class="mobile-step-subtitle">' + s.subtitle + '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        });
+        html += '</div>';
+
+        html += '<div class="mobile-progress" id="mobileProgress">';
+        STEPS.forEach(function (_, i) {
+            html += '<div class="mobile-progress-dot ' + (i === 0 ? 'active' : '') + '" data-idx="' + i + '"></div>';
+        });
+        html += '</div>';
+
+        mobileContainer.innerHTML = html;
+
+        mobileCards = mobileContainer.querySelectorAll('.mobile-step-card');
+        mobileDots = mobileContainer.querySelectorAll('.mobile-progress-dot');
+
+        mobileDots.forEach(function (dot) {
+            dot.addEventListener('click', function () {
+                var idx = parseInt(this.getAttribute('data-idx'));
+                var rect = stickySection.getBoundingClientRect();
+                var sectionTop = window.pageYOffset + rect.top;
+                var sectionH = stickySection.offsetHeight;
+                var viewportH = window.innerHeight;
+                var scrollable = sectionH - viewportH;
+                if (scrollable > 0) {
+                    var targetY = sectionTop + (idx / STEPS.length) * scrollable + 20;
+                    window.scrollTo({ top: targetY, behavior: 'smooth' });
+                }
+            });
+        });
+    }
+
+    function updateDesktop() {
+        if (!cardsInner || totalCards === 0) return;
+
         var wrapper = cardsInner.parentElement;
         var wrapperH = wrapper ? wrapper.offsetHeight : 520;
         var firstCard = cards[0];
         var cardH = firstCard ? firstCard.offsetHeight : 120;
         var computedGap = parseInt(window.getComputedStyle(cardsInner).gap) || 20;
-        // Har bir cardning unikali scrollable diapazoni (px)
-        // Jami scroll maydoni = sectionHeight - viewportHeight
-        // Uni to'rtga bo'lib, har birga individual ulush beramiz:
-        // Card 1 → 0% dan 20%
-        // Card 2 → 20% dan 40%  (sekinroq)
-        // Card 3 → 40% dan 70%
-        // Card 4 → 70% dan 100%
-        return { wrapperH: wrapperH, cardH: cardH, gap: computedGap };
+        var initialOffset = wrapperH - cardH - 40;
+
+        var rect = stickySection.getBoundingClientRect();
+        var sectionH = stickySection.offsetHeight;
+        var viewportH = window.innerHeight;
+        var scrolled = -rect.top;
+        var scrollable = sectionH - viewportH;
+
+        if (scrollable <= 0) return;
+
+        var progress = Math.max(0, Math.min(1, scrolled / scrollable));
+        var activeIndex = Math.min(totalCards - 1, Math.floor(progress * totalCards));
+
+        var centerPos = wrapperH / 2 - cardH / 2;
+        var cardPos = activeIndex * (cardH + computedGap);
+        var targetTranslate = -(cardPos - centerPos);
+        if (progress < 0.03) targetTranslate = initialOffset;
+
+        cardsInner.style.transform = 'translateY(' + targetTranslate + 'px)';
+
+        cards.forEach(function (c, i) {
+            c.classList.toggle('active', i === activeIndex);
+        });
+        slides.forEach(function (s, i) {
+            s.classList.toggle('active', i === activeIndex);
+        });
     }
 
-    var m = getMetrics();
-    var WRAPPER_HEIGHT = m.wrapperH;
-    var CARD_HEIGHT = m.cardH;
-    var GAP = m.gap;
+    function updateMobile() {
+        if (!mobileInitialized) buildMobileLayout();
+        if (!mobileCards || mobileCards.length === 0) return;
 
-    // Boshlang'ich: birinchi card pastdan ko'rinadi
-    var INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
+        var rect = stickySection.getBoundingClientRect();
+        var sectionH = stickySection.offsetHeight;
+        var viewportH = window.innerHeight;
+        var scrolled = -rect.top;
+        var scrollable = sectionH - viewportH;
 
-    var currentTranslate = INITIAL_OFFSET;
-    var targetTranslate = INITIAL_OFFSET;
-    var isAnimating = false;
+        if (scrollable <= 0) return;
 
-    function lerp(start, end, factor) {
-        return start + (end - start) * factor;
-    }
+        var progress = Math.max(0, Math.min(1, scrolled / scrollable));
+        var stepIndex = Math.min(STEPS.length - 1, Math.floor(progress * STEPS.length));
 
-    // Har bir card uchun individual progress chegaralari
-    // Card 0: 0%–22%, Card 1: 22%–48%, Card 2: 48%–74%, Card 3: 74%–100%
-    var segmentBoundaries = [0, 0.22, 0.48, 0.74, 1.0];
+        if (stepIndex === mobileCurrentStep) return;
+        mobileCurrentStep = stepIndex;
 
-    function updateOnScroll() {
-        if (window.innerWidth < 992) {
-            cardsInner.style.transform = '';
-            cards.forEach(function (card) {
+        mobileCards.forEach(function (card, i) {
+            card.classList.remove('active', 'is-prev', 'is-next');
+            if (i === stepIndex) {
                 card.classList.add('active');
-            });
-            return;
-        }
-
-        // O'lchamlarni qayta hisoblash (resize uchun)
-        m = getMetrics();
-        WRAPPER_HEIGHT = m.wrapperH;
-        CARD_HEIGHT = m.cardH;
-        GAP = m.gap;
-        INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
-
-        var sectionRect = stickySection.getBoundingClientRect();
-        var sectionHeight = stickySection.offsetHeight;
-        var viewportHeight = window.innerHeight;
-
-        var scrolled = -sectionRect.top;
-        var scrollableHeight = sectionHeight - viewportHeight;
-        var progress = Math.max(0, Math.min(1, scrolled / scrollableHeight));
-
-        // Individual segmentlar bo'yicha aktiv card aniqlash
-        var activeIndex = totalCards - 1;
-        for (var si = 0; si < totalCards; si++) {
-            if (progress < segmentBoundaries[si + 1]) {
-                activeIndex = si;
-                break;
+            } else if (i < stepIndex) {
+                card.classList.add('is-prev');
+            } else {
+                card.classList.add('is-next');
             }
+        });
+
+        if (mobileDots) {
+            mobileDots.forEach(function (d, i) {
+                d.classList.toggle('active', i === stepIndex);
+            });
         }
+    }
 
-        // Card markazga kelishi uchun target pozitsiya
-        var centerPosition = WRAPPER_HEIGHT / 2 - CARD_HEIGHT / 2;
-        var cardPosition = activeIndex * (CARD_HEIGHT + GAP);
-        targetTranslate = -(cardPosition - centerPosition);
-
-        // Boshlanishda pastroq
-        if (progress < 0.03) {
-            targetTranslate = INITIAL_OFFSET;
-        }
-
-        // Smooth lerp
-        if (Math.abs(currentTranslate - targetTranslate) > 0.5) {
-            currentTranslate = lerp(currentTranslate, targetTranslate, 0.12);
-            cardsInner.style.transform = 'translateY(' + currentTranslate + 'px)';
-            isAnimating = true;
+    function handleScroll() {
+        if (window.innerWidth < 992) {
+            updateMobile();
         } else {
-            currentTranslate = targetTranslate;
-            cardsInner.style.transform = 'translateY(' + currentTranslate + 'px)';
-            isAnimating = false;
+            updateDesktop();
         }
-
-        // Active card
-        cards.forEach(function (card, index) {
-            card.classList.toggle('active', index === activeIndex);
-        });
-
-        // Active slide
-        slides.forEach(function (slide, index) {
-            slide.classList.toggle('active', index === activeIndex);
-        });
     }
 
-    // Animation loop
-    function animate() {
-        if (isAnimating) {
-            updateOnScroll();
-        }
-        requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('scroll', function () {
-        updateOnScroll();
-    }, { passive: true });
-
-    window.addEventListener('resize', function () {
-        m = getMetrics();
-        WRAPPER_HEIGHT = m.wrapperH;
-        CARD_HEIGHT = m.cardH;
-        GAP = m.gap;
-        INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
-        updateOnScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    window.addEventListener('orientationchange', function () {
+        setTimeout(handleScroll, 150);
     });
 
-    // Initial (DOM tayyor bo'lgandan keyin)
-    requestAnimationFrame(function () {
-        m = getMetrics();
-        WRAPPER_HEIGHT = m.wrapperH;
-        CARD_HEIGHT = m.cardH;
-        GAP = m.gap;
-        INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
-        currentTranslate = INITIAL_OFFSET;
-        targetTranslate = INITIAL_OFFSET;
-        updateOnScroll();
-    });
-    animate();
+    handleScroll();
 })();
 
 /* ============ Sayyoralar rasmlarini Backend'dan yuklash (Failover Tizimi) ============ */
@@ -392,16 +492,18 @@ if (yearEl) {
         .then(function (data) {
             if (!Array.isArray(data) || data.length === 0) return;
 
-            var planetSlots = kaAll('.planet-slot');
-            planetSlots.forEach(function (slot) {
-                var imgEl = kaOne('img', slot);
-                var titleEl = kaOne('.popover-title', slot);
-                var descEl = kaOne('.popover-desc', slot);
+            var planetItems = kaAll('.planet-card-item');
+            planetItems.forEach(function (item) {
+                var imgEl = kaOne('img', item);
+                var titleEl = kaOne('.planet-card-title', item);
+                var descEl = kaOne('.planet-card-desc', item);
+                var descMobileEl = kaOne('.planet-card-desc-mobile', item);
+
                 if (!imgEl) return;
 
                 var currentTitle = titleEl ? titleEl.textContent.trim().toLowerCase() : '';
-                var match = data.find(function (item) {
-                    var itemTitle = (item.title || item.name || '').toLowerCase();
+                var match = data.find(function (p) {
+                    var itemTitle = (p.title || p.name || '').toLowerCase();
                     return itemTitle && (currentTitle.indexOf(itemTitle) !== -1 || itemTitle.indexOf(currentTitle) !== -1);
                 });
 
@@ -410,15 +512,14 @@ if (yearEl) {
                         var cleanImg = match.image.replace(/^https?:\/\/[^/]+/, '');
                         imgEl.src = cleanImg;
                     }
-                    if (match.description && descEl) {
-                        descEl.textContent = match.description;
+                    if (match.description) {
+                        if (descEl) descEl.textContent = match.description;
+                        if (descMobileEl) descMobileEl.textContent = match.description;
                     }
                 }
             });
         })
         .catch(function () {
-            // Serverdan xabar kelmasa hech narsa bajarilmaydi (Folderdagi o'z rasmlari qoladi)
-            console.log("Backend aloqasi yo'q. Folderdagi statik rasmlar ishlatilmoqda.");
+            console.log("Backend aloqasi yo'q. Local rasmlar ishlatilmoqda.");
         });
 })();
-
