@@ -218,7 +218,7 @@ if (yearEl) {
     var CARD_W = 300;
     var CARD_H = 170;
     var GAP_X = 24;
-    var GAP_Y = 12;
+    var GAP_Y = 24;
 
     function getFinalPositions() {
         var positions = [];
@@ -319,19 +319,109 @@ if (yearEl) {
     render();
 })();
 
-/* ============ Pedagogik Yondashuv — Desktop + Mobil Animatsiya ============ */
+/* ============ Pedagogik Yondashuv — Desktop + Mobil Sticky Animatsiya ============ */
 (function () {
-    var stickySection = kaOne('#qanday.section-sticky');
-    if (!stickySection) return;
+    /* ==================== DESKTOP ANIMATSIYA ==================== */
+    function initDesktopAnimation() {
+        var stickySection = document.querySelector('#qanday.section-sticky');
+        var cardsInner = document.getElementById('cardsInner');
+        if (!stickySection || !cardsInner) return;
 
-    /* --- DESKTOP ELEMENTLARI --- */
-    var cardsInner = kaOne('#cardsInner');
-    var cards = cardsInner ? kaAll('.card', cardsInner) : [];
-    var imgWrapper = kaOne('#pedagogyImageWrapper');
-    var slides = imgWrapper ? kaAll('.image-slide', imgWrapper) : [];
-    var totalCards = cards.length;
+        var cards = Array.prototype.slice.call(cardsInner.querySelectorAll('.card'));
+        var imgWrapper = document.getElementById('pedagogyImageWrapper');
+        if (!imgWrapper) return;
+        var slides = Array.prototype.slice.call(imgWrapper.querySelectorAll('.image-slide'));
+        var totalCards = cards.length;
+        if (totalCards === 0) return;
 
-    /* --- MOBIL DATA & SOZLAMALARI --- */
+        function getMetrics() {
+            var wrapper = cardsInner.parentElement;
+            var wrapperH = wrapper ? wrapper.offsetHeight : 520;
+            var firstCard = cards[0];
+            var cardH = firstCard ? firstCard.offsetHeight : 120;
+            var computedGap = parseInt(window.getComputedStyle(cardsInner).gap) || 20;
+            return { wrapperH: wrapperH, cardH: cardH, gap: computedGap };
+        }
+
+        var m = getMetrics();
+        var WRAPPER_HEIGHT = m.wrapperH;
+        var CARD_HEIGHT = m.cardH;
+        var GAP = m.gap;
+        var INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
+        var currentTranslate = INITIAL_OFFSET;
+        var targetTranslate = INITIAL_OFFSET;
+        var isAnimating = false;
+
+        function lerp(s, e, f) { return s + (e - s) * f; }
+
+        var segmentBoundaries = [0, 0.22, 0.48, 0.74, 1.0];
+
+        function updateOnScroll() {
+            m = getMetrics();
+            WRAPPER_HEIGHT = m.wrapperH;
+            CARD_HEIGHT = m.cardH;
+            GAP = m.gap;
+            INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
+
+            var rect = stickySection.getBoundingClientRect();
+            var sectionH = stickySection.offsetHeight;
+            var viewportH = window.innerHeight;
+            var scrolled = -rect.top;
+            var scrollable = sectionH - viewportH;
+            if (scrollable <= 0) return;
+            var progress = Math.max(0, Math.min(1, scrolled / scrollable));
+
+            var activeIndex = totalCards - 1;
+            for (var si = 0; si < totalCards; si++) {
+                if (progress < segmentBoundaries[si + 1]) { activeIndex = si; break; }
+            }
+
+            var centerPos = WRAPPER_HEIGHT / 2 - CARD_HEIGHT / 2;
+            var cardPos = activeIndex * (CARD_HEIGHT + GAP);
+            targetTranslate = -(cardPos - centerPos);
+            if (progress < 0.03) targetTranslate = INITIAL_OFFSET;
+
+            if (Math.abs(currentTranslate - targetTranslate) > 0.5) {
+                currentTranslate = lerp(currentTranslate, targetTranslate, 0.12);
+                isAnimating = true;
+            } else {
+                currentTranslate = targetTranslate;
+                isAnimating = false;
+            }
+            cardsInner.style.transform = 'translateY(' + currentTranslate + 'px)';
+
+            cards.forEach(function (c, i) { c.classList.toggle('active', i === activeIndex); });
+            slides.forEach(function (s, i) { s.classList.toggle('active', i === activeIndex); });
+        }
+
+        function animate() {
+            if (isAnimating) updateOnScroll();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('scroll', updateOnScroll, { passive: true });
+        window.addEventListener('resize', function () {
+            m = getMetrics();
+            WRAPPER_HEIGHT = m.wrapperH;
+            CARD_HEIGHT = m.cardH;
+            GAP = m.gap;
+            INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
+            updateOnScroll();
+        });
+        requestAnimationFrame(function () {
+            m = getMetrics();
+            WRAPPER_HEIGHT = m.wrapperH;
+            CARD_HEIGHT = m.cardH;
+            GAP = m.gap;
+            INITIAL_OFFSET = WRAPPER_HEIGHT - CARD_HEIGHT - 40;
+            currentTranslate = INITIAL_OFFSET;
+            targetTranslate = INITIAL_OFFSET;
+            updateOnScroll();
+        });
+        animate();
+    }
+
+    /* ==================== MOBIL ANIMATSIYA ==================== */
     var STEPS = [
         { number: "01", title: "Maqsadli sayohat", subtitle: "Bola Quyosh tizimidagi o'zi kashf etmoqchi bo'lgan qobiliyat sayyorasini tanlaydi.", image: "img/how1.jpg", alt: "Maqsadli sayohat" },
         { number: "02", title: "Fikrlab o'rganish", subtitle: "Sun'iy intellekt bolaning o'rniga vazifani bajarmaydi. U yo'naltiruvchi savollar orqali bolani to'g'ri javob topishga undaydi.", image: "img/how2.jpg", alt: "Fikrlab o'rganish" },
@@ -340,105 +430,58 @@ if (yearEl) {
     ];
 
     var mobileInitialized = false;
-    var mobileContainer, mobileCards, mobileDots;
     var mobileCurrentStep = -1;
+    var mobileContainer, mobileCard, mobileNumber, mobileTitle, mobileSubtitle, mobileSlides, mobileDots;
 
     function buildMobileLayout() {
         mobileContainer = document.getElementById('mobileStepContainer');
         if (!mobileContainer || mobileInitialized) return;
         mobileInitialized = true;
 
-        var html = '<div class="mobile-step-cards-wrapper" id="mobileCardsWrapper">';
-        STEPS.forEach(function (s, i) {
-            var initialClass = i === 0 ? 'active' : 'is-next';
-            html += '<div class="mobile-step-card ' + initialClass + '" data-idx="' + i + '">' +
-                '<div class="mobile-step-image-wrap">' +
-                '<img src="' + s.image + '" alt="' + s.alt + '">' +
-                '</div>' +
-                '<div class="mobile-step-content">' +
-                '<div class="mobile-step-number">' + s.number + '</div>' +
-                '<div class="mobile-step-text">' +
-                '<div class="mobile-step-title">' + s.title + '</div>' +
-                '<div class="mobile-step-subtitle">' + s.subtitle + '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-        });
-        html += '</div>';
+        mobileContainer.innerHTML = `
+        <div class="mobile-step-card active" id="mobileStepCard">
+            <div class="mobile-step-image-wrap" id="mobileImageWrap">
+                ${STEPS.map(function (s, i) {
+            return `<div class="mob-slide ${i === 0 ? 'active' : ''}">
+                        <img src="${s.image}" alt="${s.alt}">
+                    </div>`;
+        }).join('')}
+            </div>
+            <div class="mobile-step-content">
+                <div class="mobile-step-number" id="mobileStepNumber">${STEPS[0].number}</div>
+                <div class="mobile-step-text">
+                    <div class="mobile-step-title" id="mobileStepTitle">${STEPS[0].title}</div>
+                    <div class="mobile-step-subtitle" id="mobileStepSubtitle">${STEPS[0].subtitle}</div>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-progress" id="mobileProgress">
+            ${STEPS.map(function (_, i) {
+            return `<div class="mobile-progress-dot ${i === 0 ? 'active' : ''}" data-idx="${i}"></div>`;
+        }).join('')}
+        </div>
+    `;
 
-        html += '<div class="mobile-progress" id="mobileProgress">';
-        STEPS.forEach(function (_, i) {
-            html += '<div class="mobile-progress-dot ' + (i === 0 ? 'active' : '') + '" data-idx="' + i + '"></div>';
-        });
-        html += '</div>';
-
-        mobileContainer.innerHTML = html;
-
-        mobileCards = mobileContainer.querySelectorAll('.mobile-step-card');
+        mobileCard = document.getElementById('mobileStepCard');
+        mobileNumber = document.getElementById('mobileStepNumber');
+        mobileTitle = document.getElementById('mobileStepTitle');
+        mobileSubtitle = document.getElementById('mobileStepSubtitle');
+        mobileSlides = mobileContainer.querySelectorAll('.mob-slide');
         mobileDots = mobileContainer.querySelectorAll('.mobile-progress-dot');
-
-        mobileDots.forEach(function (dot) {
-            dot.addEventListener('click', function () {
-                var idx = parseInt(this.getAttribute('data-idx'));
-                var rect = stickySection.getBoundingClientRect();
-                var sectionTop = window.pageYOffset + rect.top;
-                var sectionH = stickySection.offsetHeight;
-                var viewportH = window.innerHeight;
-                var scrollable = sectionH - viewportH;
-                if (scrollable > 0) {
-                    var targetY = sectionTop + (idx / STEPS.length) * scrollable + 20;
-                    window.scrollTo({ top: targetY, behavior: 'smooth' });
-                }
-            });
-        });
     }
 
-    function updateDesktop() {
-        if (!cardsInner || totalCards === 0) return;
-
-        var wrapper = cardsInner.parentElement;
-        var wrapperH = wrapper ? wrapper.offsetHeight : 520;
-        var firstCard = cards[0];
-        var cardH = firstCard ? firstCard.offsetHeight : 120;
-        var computedGap = parseInt(window.getComputedStyle(cardsInner).gap) || 20;
-        var initialOffset = wrapperH - cardH - 40;
-
-        var rect = stickySection.getBoundingClientRect();
-        var sectionH = stickySection.offsetHeight;
-        var viewportH = window.innerHeight;
-        var scrolled = -rect.top;
-        var scrollable = sectionH - viewportH;
-
-        if (scrollable <= 0) return;
-
-        var progress = Math.max(0, Math.min(1, scrolled / scrollable));
-        var activeIndex = Math.min(totalCards - 1, Math.floor(progress * totalCards));
-
-        var centerPos = wrapperH / 2 - cardH / 2;
-        var cardPos = activeIndex * (cardH + computedGap);
-        var targetTranslate = -(cardPos - centerPos);
-        if (progress < 0.03) targetTranslate = initialOffset;
-
-        cardsInner.style.transform = 'translateY(' + targetTranslate + 'px)';
-
-        cards.forEach(function (c, i) {
-            c.classList.toggle('active', i === activeIndex);
-        });
-        slides.forEach(function (s, i) {
-            s.classList.toggle('active', i === activeIndex);
-        });
-    }
-
-    function updateMobile() {
+    function updateMobileStep() {
+        if (window.innerWidth > 991) return;
         if (!mobileInitialized) buildMobileLayout();
-        if (!mobileCards || mobileCards.length === 0) return;
 
-        var rect = stickySection.getBoundingClientRect();
-        var sectionH = stickySection.offsetHeight;
+        var section = document.querySelector('#qanday.section-sticky');
+        if (!section || !mobileCard) return;
+
+        var rect = section.getBoundingClientRect();
+        var sectionH = section.offsetHeight;
         var viewportH = window.innerHeight;
         var scrolled = -rect.top;
         var scrollable = sectionH - viewportH;
-
         if (scrollable <= 0) return;
 
         var progress = Math.max(0, Math.min(1, scrolled / scrollable));
@@ -447,39 +490,62 @@ if (yearEl) {
         if (stepIndex === mobileCurrentStep) return;
         mobileCurrentStep = stepIndex;
 
-        mobileCards.forEach(function (card, i) {
-            card.classList.remove('active', 'is-prev', 'is-next');
-            if (i === stepIndex) {
-                card.classList.add('active');
-            } else if (i < stepIndex) {
-                card.classList.add('is-prev');
-            } else {
-                card.classList.add('is-next');
-            }
-        });
+        var step = STEPS[stepIndex];
+
+        if (mobileNumber) mobileNumber.textContent = step.number;
+        if (mobileTitle) mobileTitle.textContent = step.title;
+        if (mobileSubtitle) mobileSubtitle.textContent = step.subtitle;
+
+        if (mobileSlides) {
+            mobileSlides.forEach(function (sl, i) {
+                sl.classList.toggle('active', i === stepIndex);
+            });
+        }
 
         if (mobileDots) {
             mobileDots.forEach(function (d, i) {
                 d.classList.toggle('active', i === stepIndex);
             });
         }
+
+        mobileCard.classList.add('active');
     }
 
-    function handleScroll() {
+    function onScroll() {
         if (window.innerWidth < 992) {
-            updateMobile();
-        } else {
-            updateDesktop();
+            updateMobileStep();
         }
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
+    function onResize() {
+        if (window.innerWidth < 992) {
+            if (!mobileInitialized) buildMobileLayout();
+            mobileCurrentStep = -1;
+            updateMobileStep();
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
     window.addEventListener('orientationchange', function () {
-        setTimeout(handleScroll, 150);
+        setTimeout(onResize, 150);
     });
 
-    handleScroll();
+    if (window.innerWidth < 992) {
+        buildMobileLayout();
+        updateMobileStep();
+    } else {
+        initDesktopAnimation();
+    }
+
+    var lastMode = window.innerWidth < 992 ? 'mobile' : 'desktop';
+    window.addEventListener('resize', function () {
+        var newMode = window.innerWidth < 992 ? 'mobile' : 'desktop';
+        if (newMode === 'desktop' && lastMode === 'mobile') {
+            initDesktopAnimation();
+        }
+        lastMode = newMode;
+    });
 })();
 
 /* ============ Sayyoralar rasmlarini Backend'dan yuklash (Failover Tizimi) ============ */

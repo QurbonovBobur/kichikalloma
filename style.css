@@ -22,14 +22,14 @@
 html {
     scroll-behavior: smooth;
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 body {
     font-family: 'Manrope', system-ui, sans-serif;
     background: var(--cream);
     color: var(--ink);
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100vw;
     line-height: 1.6;
 }
@@ -976,510 +976,307 @@ section {
     }
 }
 
-.sun-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    /* Glow olib tashlandi */
-    animation: sun-pulse 3.5s ease-in-out infinite alternate;
+/* ============ 4. QANDAY ISHLAYDI — PEDAGOGIK YONDASHUV ============ */
+.section-sticky {
+    position: relative;
+    height: 600vh;
+    background: #ffffff;
 }
 
-@keyframes sun-pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    100% {
-        transform: scale(1.06);
-    }
+.section-sticky .sticky-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 80px;
+    gap: 80px;
+    overflow: hidden;
 }
 
-/* sun-glow butunlay olib tashlandi */
+/* Desktop - Cardlar chap */
+.cards-wrapper {
+    position: relative;
+    width: 420px;
+    height: 520px;
+    overflow: hidden;
+}
 
-/* ---- Bitta Yagona Halqa O'qi (KATTA ORBITA) ---- */
-.main-orbit-ring {
+.cards-wrapper::before,
+.cards-wrapper::after {
+    content: '';
     position: absolute;
-    width: 82%;
-    height: 82%;
-    top: 9%;
-    left: 9%;
-    border-radius: 50%;
-    border: 1.5px dashed rgba(255, 255, 255, 0.22);
-    /* Glow olib tashlandi */
+    left: 0;
+    right: 0;
+    height: 60px;
+    z-index: 10;
     pointer-events: none;
 }
 
-.main-orbit-rotator {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    animation: main-orbit-rotate 40s linear infinite;
-}
-
-@keyframes main-orbit-rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* ---- 8 ta slotlar ---- */
-.planet-slot {
-    position: absolute;
+.cards-wrapper::before {
     top: 0;
-    left: 50%;
-    width: 0;
-    height: 100%;
-    transform-origin: center center;
-    pointer-events: none;
+    background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
 }
 
-.slot-0 {
-    transform: rotate(0deg);
+.cards-wrapper::after {
+    bottom: 0;
+    background: linear-gradient(to top, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
 }
 
-.slot-45 {
-    transform: rotate(45deg);
-}
-
-.slot-90 {
-    transform: rotate(90deg);
-}
-
-.slot-135 {
-    transform: rotate(135deg);
-}
-
-.slot-180 {
-    transform: rotate(180deg);
-}
-
-.slot-225 {
-    transform: rotate(225deg);
-}
-
-.slot-270 {
-    transform: rotate(270deg);
-}
-
-.slot-315 {
-    transform: rotate(315deg);
-}
-
-/* ---- Orbit ustidagi Sayyora (TIK TURADI, GLOWSIZ) ---- */
-.planet-on-orbit {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: auto;
-    cursor: pointer;
+.cards-inner {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card {
+    width: 420px;
+    padding: 24px 28px;
+    background: #fffaf1;
+    border-radius: 20px;
+    border: 2px solid var(--line);
+    display: flex;
     align-items: center;
-    z-index: 5;
-    /* Sayyora Quyosh ustida (5 > 2) */
-    animation: planet-counter-rotate 40s linear infinite;
+    gap: 20px;
+    transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+    flex-shrink: 0;
 }
 
-.planet-on-orbit:hover {
-    z-index: 20;
-    /* Faol sayyora hamma narsadan ustun */
+.card.active {
+    border-color: var(--primary);
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(250, 176, 3, 0.15);
 }
 
-/* Har bir slot uchun boshlang'ich burchak offseti */
-.slot-0 .planet-on-orbit {
-    --slot-angle: 0deg;
-}
-
-.slot-45 .planet-on-orbit {
-    --slot-angle: -45deg;
-}
-
-.slot-90 .planet-on-orbit {
-    --slot-angle: -90deg;
-}
-
-.slot-135 .planet-on-orbit {
-    --slot-angle: -135deg;
-}
-
-.slot-180 .planet-on-orbit {
-    --slot-angle: -180deg;
-}
-
-.slot-225 .planet-on-orbit {
-    --slot-angle: -225deg;
-}
-
-.slot-270 .planet-on-orbit {
-    --slot-angle: -270deg;
-}
-
-.slot-315 .planet-on-orbit {
-    --slot-angle: -315deg;
-}
-
-@keyframes planet-counter-rotate {
-    from {
-        rotate: var(--slot-angle);
-    }
-
-    to {
-        rotate: calc(var(--slot-angle) - 360deg);
-    }
-}
-
-/* ---- Sayyora rasmi (O'RTACHA, GLOWSIZ) ---- */
-.planet-on-orbit img {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    object-fit: cover;
-    /* Glow olib tashlandi */
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.planet-on-orbit:hover img {
-    transform: scale(1.35);
-}
-
-/* ---- Chip yozuvi (ham tik turadi) ---- */
-.orbit-planet-chip {
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--ink);
-    background: rgba(255, 208, 0, 0.15);
-    border: 1px solid rgba(255, 179, 0, 0.5);
-    padding: 4px 12px;
-    border-radius: 999px;
-    white-space: nowrap;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.planet-on-orbit:hover .orbit-planet-chip {
-    opacity: 0;
-    transform: translate(-50%, 4px);
-}
-
-/* ---- Popover ---- */
-.orbit-planet-popover {
-    position: absolute;
-    bottom: calc(100% + 16px);
-    left: 50%;
-    transform: translateX(-50%) scale(0.85);
+.card-number {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
     background: #fff;
-    border: 1px solid rgba(255, 179, 0, 0.3);
-    border-radius: 16px;
-    padding: 14px 16px;
-    width: 220px;
-    box-shadow: 0 18px 45px rgba(18, 22, 43, 0.12);
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
-    z-index: 100;
-    text-align: left;
-}
-
-.planet-on-orbit:hover .orbit-planet-popover {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) scale(1);
-}
-
-.planet-on-orbit.active-hover img {
-    transform: scale(1.35);
-}
-
-.planet-on-orbit.active-hover .orbit-planet-chip {
-    opacity: 0;
-    transform: translate(-50%, 4px);
-}
-
-.popover-tag {
-    display: inline-block;
-    font-size: 9px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
     font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--primary);
-    background: rgba(250, 176, 3, 0.15);
-    padding: 2px 7px;
-    border-radius: 999px;
-    margin-bottom: 4px;
+    color: var(--muted);
+    font-family: 'Unbounded', sans-serif;
+    transition: color 0.4s ease, background 0.4s ease, border-color 0.4s ease;
 }
 
-.popover-title {
-    font-size: 15px;
+.card.active .card-number {
+    color: #ffffff;
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 4px 10px rgba(250, 176, 3, 0.3);
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.card-title {
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--ink);
-    margin: 2px 0;
     font-family: 'Unbounded', sans-serif;
 }
 
-.popover-skill {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 6px;
-}
-
-.popover-desc {
-    font-size: 11.5px;
-    line-height: 1.45;
+.card-subtitle {
+    font-size: 0.95rem;
     color: var(--muted);
-    margin: 0;
+    line-height: 1.5;
     font-weight: 500;
 }
 
-/* ============ PASTDAGI KARTOCHKALAR ============ */
-.planet-grid {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.planet-card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    padding: 28px 24px;
-    transition: transform .35s ease, border-color .35s, box-shadow .35s;
-    position: relative;
-}
-
-.planet-card:hover,
-.planet-card.card-highlight {
-    transform: translateY(-9px);
-    border-color: rgba(250, 176, 3, .5);
-    box-shadow: 0 24px 60px rgba(250, 176, 3, .15);
-}
-
-.planet-tag {
-    position: absolute;
-    top: 22px;
-    right: 20px;
-    background: rgba(250, 176, 3, .14);
-    color: var(--primary);
-    border-radius: 999px;
-    padding: 5px 11px;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-}
-
-.planet-img {
-    width: 92px;
-    height: 92px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.planet-name {
-    margin-top: 18px;
-    font-size: 17px;
-    font-weight: 600;
-}
-
-.planet-skill {
-    color: var(--primary);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    margin-top: 4px;
-    font-family: 'Manrope';
-}
-
-.planet-desc {
-    margin-top: 10px;
-    color: var(--muted);
-    font-size: 13.5px;
-    font-weight: 500;
-    line-height: 1.65;
-}
-
-/* ============ 4. QANDAY ISHLAYDI — PEDAGOGIK KARUSEL ============ */
-.how {
-    padding: 110px 0 140px
-}
-
-.pedagogy-carousel-container {
-    display: grid;
-    grid-template-columns: 1fr 500px;
-    gap: 60px;
-    align-items: center;
-    position: relative;
-    height: 480px;
-    perspective: 1500px;
-}
-
-.pedagogy-cards-wrapper {
-    position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.pedagogy-card {
-    position: absolute;
-    width: 320px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 26px 28px;
-    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease, z-index 0s 0.35s;
-    box-shadow: 0 8px 24px rgba(18, 22, 43, 0.08);
-    cursor: pointer;
-}
-
-.pedagogy-card::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(135deg, rgba(255, 208, 0, 0.25), transparent 40%, transparent 60%, rgba(255, 208, 0, 0.25));
-    border-radius: 22px;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.pedagogy-card.active::before {
-    opacity: 1;
-}
-
-.pedagogy-card-num {
-    width: 50px;
-    height: 50px;
-    border-radius: 14px;
-    background: var(--primary-soft);
-    color: var(--primary);
-    font-family: 'Unbounded';
-    font-weight: 700;
-    font-size: 16px;
-    display: grid;
-    place-items: center;
-    margin-bottom: 18px;
-}
-
-.pedagogy-card h3 {
-    font-size: 17px;
-    font-weight: 600;
-    margin-bottom: 10px;
+.card.active .card-subtitle {
     color: var(--ink);
 }
 
-.pedagogy-card p {
-    color: var(--muted);
-    font-size: 13.5px;
-    font-weight: 500;
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* Active card - markazda, rasmga nisbatan gorizontal center */
-.pedagogy-card.active {
-    transform: translateX(0) translateY(0) scale(1) rotateY(0deg);
-    z-index: 10;
-    opacity: 1;
-    box-shadow: 0 15px 40px rgba(250, 176, 3, 0.18);
-}
-
-/* Chap tomondagi kartalar (karusel effekti - soat vidjetlaridek) */
-.pedagogy-card.prev-1 {
-    transform: translateX(-100px) translateY(-25px) scale(0.9) rotateY(12deg);
-    z-index: 9;
-    opacity: 0.65;
-}
-
-.pedagogy-card.prev-2 {
-    transform: translateX(-170px) translateY(-45px) scale(0.82) rotateY(22deg);
-    z-index: 8;
-    opacity: 0.4;
-}
-
-.pedagogy-card.prev-3 {
-    transform: translateX(-220px) translateY(-55px) scale(0.75) rotateY(28deg);
-    z-index: 7;
-    opacity: 0.25;
-}
-
-/* O'ng tomondagi kartalar */
-.pedagogy-card.next-1 {
-    transform: translateX(100px) translateY(-25px) scale(0.9) rotateY(-12deg);
-    z-index: 9;
-    opacity: 0.65;
-}
-
-.pedagogy-card.next-2 {
-    transform: translateX(170px) translateY(-45px) scale(0.82) rotateY(-22deg);
-    z-index: 8;
-    opacity: 0.4;
-}
-
-.pedagogy-card.next-3 {
-    transform: translateX(220px) translateY(-55px) scale(0.75) rotateY(-28deg);
-    z-index: 7;
-    opacity: 0.25;
-}
-
-/* Yashirin holat - dumaloq harakat uchun yuqoriga kirib ketadi */
-.pedagogy-card.hidden-above {
-    transform: translateY(-180px) scale(0.7);
-    z-index: 5;
-    opacity: 0;
-}
-
-/* Rasm joyi */
-.pedagogy-image-area {
-    position: relative;
-    height: 380px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.pedagogy-image-placeholder {
-    width: 380px;
-    height: 380px;
-    background: #ffffff;
-    border: 2px dashed rgba(255, 179, 0, 0.4);
+/* O'ng tomon - Rasm (desktop) */
+.image-wrapper {
+    width: 420px;
+    height: 520px;
     border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    background: #fffaf1;
+    border: 2px solid var(--line);
+    flex-shrink: 0;
+}
+
+.image-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    transition: all 0.5s ease;
 }
 
-.pedagogy-image-placeholder img {
-    max-width: 85%;
-    max-height: 85%;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(250, 176, 3, 0.2));
-    transition: transform 0.5s ease, opacity 0.4s ease;
+.image-slide.active {
+    opacity: 1;
 }
 
-.pedagogy-image-placeholder.img-changing img {
-    transform: scale(0.85);
-    opacity: 0.7;
+.image-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ============ MOBIL UCHUN YANGI CARD ============ */
+.mobile-step-container {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .section-sticky {
+        height: 400vh;
+    }
+
+    .section-sticky .sticky-container {
+        flex-direction: column;
+        padding: 0 20px;
+        gap: 0;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cards-wrapper,
+    .image-wrapper {
+        display: none;
+    }
+
+    .mobile-step-container {
+        display: block;
+        width: 100%;
+        max-width: 340px;
+    }
+
+    .mobile-step-card {
+        background: #fffaf1;
+        border-radius: 24px;
+        border: 2px solid var(--line);
+        overflow: hidden;
+        transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .mobile-step-card.active {
+        border-color: var(--primary);
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(250, 176, 3, 0.15);
+    }
+
+    .mobile-step-image-wrap {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+        background: #fffaf1;
+    }
+
+    .mobile-step-image-wrap .mob-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.55s ease;
+    }
+
+    .mobile-step-image-wrap .mob-slide.active {
+        opacity: 1;
+    }
+
+    .mobile-step-image-wrap .mob-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .mobile-step-content {
+        padding: 20px 22px 24px;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+    }
+
+    .mobile-step-number {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: 50%;
+        background: #fff;
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Unbounded', sans-serif;
+        font-weight: 800;
+        font-size: 1.05rem;
+        color: var(--muted);
+        transition: all 0.4s ease;
+    }
+
+    .mobile-step-card.active .mobile-step-number {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 4px 10px rgba(250, 176, 3, 0.3);
+    }
+
+    .mobile-step-text {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex: 1;
+    }
+
+    .mobile-step-title {
+        font-family: 'Unbounded', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--ink);
+        line-height: 1.3;
+    }
+
+    .mobile-step-subtitle {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.55;
+        font-weight: 500;
+    }
+
+    .mobile-step-card.active .mobile-step-subtitle {
+        color: var(--ink);
+    }
+
+    .mobile-progress {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .mobile-progress-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--line);
+        transition: all 0.3s ease;
+    }
+
+    .mobile-progress-dot.active {
+        background: var(--primary);
+        width: 24px;
+        border-radius: 4px;
+    }
 }
 
 /* ============ 5. AFZALLIKLAR — PIN BOARD ============ */
