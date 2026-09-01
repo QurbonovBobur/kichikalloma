@@ -439,34 +439,32 @@ if (yearEl) {
         mobileInitialized = true;
 
         mobileContainer.innerHTML = `
-        <div class="mobile-step-card active" id="mobileStepCard">
-            <div class="mobile-step-image-wrap" id="mobileImageWrap">
-                ${STEPS.map(function (s, i) {
-            return `<div class="mob-slide ${i === 0 ? 'active' : ''}">
-                        <img src="${s.image}" alt="${s.alt}">
-                    </div>`;
+<div class="mobile-step-card active" id="mobileStepCard">
+    <div class="mobile-step-image-wrap" id="mobileImageWrap">
+        ${STEPS.map(function (s, i) {
+            return `<img src="${s.image}" alt="${s.alt}" class="mob-slide-img ${i === 0 ? 'active' : ''}">`;
         }).join('')}
-            </div>
-            <div class="mobile-step-content">
-                <div class="mobile-step-number" id="mobileStepNumber">${STEPS[0].number}</div>
-                <div class="mobile-step-text">
-                    <div class="mobile-step-title" id="mobileStepTitle">${STEPS[0].title}</div>
-                    <div class="mobile-step-subtitle" id="mobileStepSubtitle">${STEPS[0].subtitle}</div>
-                </div>
-            </div>
+    </div>
+    <div class="mobile-step-content">
+        <div class="mobile-step-number" id="mobileStepNumber">${STEPS[0].number}</div>
+        <div class="mobile-step-text">
+            <div class="mobile-step-title" id="mobileStepTitle">${STEPS[0].title}</div>
+            <div class="mobile-step-subtitle" id="mobileStepSubtitle">${STEPS[0].subtitle}</div>
         </div>
-        <div class="mobile-progress" id="mobileProgress">
-            ${STEPS.map(function (_, i) {
+    </div>
+</div>
+<div class="mobile-progress" id="mobileProgress">
+    ${STEPS.map(function (_, i) {
             return `<div class="mobile-progress-dot ${i === 0 ? 'active' : ''}" data-idx="${i}"></div>`;
         }).join('')}
-        </div>
-    `;
+</div>
+`;
 
         mobileCard = document.getElementById('mobileStepCard');
         mobileNumber = document.getElementById('mobileStepNumber');
         mobileTitle = document.getElementById('mobileStepTitle');
         mobileSubtitle = document.getElementById('mobileStepSubtitle');
-        mobileSlides = mobileContainer.querySelectorAll('.mob-slide');
+        mobileSlides = mobileContainer.querySelectorAll('.mob-slide-img');
         mobileDots = mobileContainer.querySelectorAll('.mobile-progress-dot');
     }
 
